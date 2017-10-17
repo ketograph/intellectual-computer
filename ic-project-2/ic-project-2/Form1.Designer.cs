@@ -29,6 +29,7 @@ namespace ic_project_2
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.textBoxPar1 = new System.Windows.Forms.TextBox();
             this.textBoxPar2 = new System.Windows.Forms.TextBox();
             this.textBoxPar3 = new System.Windows.Forms.TextBox();
@@ -44,11 +45,16 @@ namespace ic_project_2
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabelBar = new System.Windows.Forms.ToolStripStatusLabel();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.measuredParametersBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.measuredParametersBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxPar1
             // 
+            this.textBoxPar1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.form1BindingSource, "DataBindings", true));
             this.textBoxPar1.Location = new System.Drawing.Point(92, 46);
             this.textBoxPar1.Name = "textBoxPar1";
             this.textBoxPar1.Size = new System.Drawing.Size(100, 20);
@@ -170,6 +176,14 @@ namespace ic_project_2
             this.listBox1.Size = new System.Drawing.Size(498, 485);
             this.listBox1.TabIndex = 15;
             // 
+            // measuredParametersBindingSource
+            // 
+            this.measuredParametersBindingSource.DataSource = typeof(ic_project_2.MeasuredParameters);
+            // 
+            // form1BindingSource
+            // 
+            this.form1BindingSource.DataSource = typeof(ic_project_2.Form1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -194,6 +208,8 @@ namespace ic_project_2
             this.Load += new System.EventHandler(this.OnFormLoad);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.measuredParametersBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -216,6 +232,8 @@ namespace ic_project_2
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel StatusLabelBar;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.BindingSource measuredParametersBindingSource;
+        private System.Windows.Forms.BindingSource form1BindingSource;
     }
 }
 

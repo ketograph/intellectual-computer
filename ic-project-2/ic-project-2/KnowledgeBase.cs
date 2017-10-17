@@ -100,13 +100,6 @@ WHERE {
         }
    
 
-        public void DoSomething()
-        {
-            AskOneParameter(1, 100);
-            AskOneParameter(1, 400);
-            AskOneParameter(1, 600);
-        }
-
         private string GetNodeString(INode node)
         {
             string s = node.ToString();
@@ -127,10 +120,7 @@ WHERE {
 
         protected virtual void OnNewLogMessage(string logMessage)
         {
-            if (LogMessageAdded != null)
-            {
-                LogMessageAdded(this, new LogMessageEventArgs() { Message = logMessage });
-            }
+            LogMessageAdded?.Invoke(this, new LogMessageEventArgs() { Message = logMessage });
         }
     }
 }

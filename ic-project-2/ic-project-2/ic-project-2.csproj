@@ -85,6 +85,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Form1.datasource" />
+    <None Include="Properties\DataSources\ic_project_2.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\ic_project_2.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\KnowledgeBase.datasource" />
+    <None Include="Properties\DataSources\LogMessageEventArgs.datasource" />
+    <None Include="Properties\DataSources\MeasuredParameters.datasource" />
+    <None Include="Properties\DataSources\Program.datasource" />
+    <None Include="Properties\DataSources\State.datasource" />
+    <None Include="Properties\DataSources\State.InternalStatus.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

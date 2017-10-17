@@ -15,7 +15,8 @@ namespace ic_project_2
     {
         SerialPort serialPort;
         KnowledgeBase kb;
-        List<TextBox> textBoxList;
+        List<TextBox> textBoxList; // to iterate over all textboxes
+        MeasuredParameters parameters = new MeasuredParameters();
 
         public Form1()
         {
@@ -24,17 +25,15 @@ namespace ic_project_2
 
         ~Form1()
         {
-            if (serialPort != null && serialPort.IsOpen)
-                serialPort.Close();
+            serialPort?.Close();
         }
 
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort sp = (SerialPort)sender;
             string inParameterString = sp.ReadExisting();
-            var parameters = new MeasuredParameters();
             parameters.ParseParametersString(inParameterString);
-            SetParametersTextboxes(parameters);
+        //    SetParametersTextboxes(parameters);
             QueryEachParameterSeperatly(parameters);
         }
 
@@ -51,7 +50,7 @@ namespace ic_project_2
         private void SetStatus(int param, State state)
         {
             if (textBoxList[param].InvokeRequired)
-            { 
+            {
                 Action act = () => textBoxList[param].BackColor = state.GetStateColor();
                 textBoxList[param].Invoke(act);
             }
@@ -113,10 +112,16 @@ namespace ic_project_2
         }
         private void OnFormLoad(object sender, EventArgs e)
         {
-            textBoxList =  new List<TextBox>() { textBoxPar1, textBoxPar2, textBoxPar3, textBoxPar4, textBoxPar5 };
+            textBoxList = new List<TextBox>() { textBoxPar1, textBoxPar2, textBoxPar3, textBoxPar4, textBoxPar5 };
             kb = new KnowledgeBase();
             kb.LogMessageAdded += this.OnNewLogMessage;
             kb.LoadTurtleFile();
+            textBoxPar1.DataBindings.Add("Text", parameters, "Parameter1");
+            textBoxPar2.DataBindings.Add("Text", parameters, "Parameter2");
+            //textBoxPar3.DataBindings.Add("Text", parameters.Parameter3 "Name");
+            //textBoxPar4.DataBindings.Add("Text", parameters.Parameter4, "Name");
+            //textBoxPar5.DataBindings.Add("Text", parameters.Parameter5, "Name");
+
         }
 
         private void OnNewLogMessage(object source, LogMessageEventArgs e)
