@@ -77,12 +77,28 @@ WHERE {
                     OnNewLogMessage("Empty Result, everything good.");
                 else
                 {
+
                     SparqlResult result = resultSet[0];
-                    OnNewLogMessage(1 + ". " + result);
+                    var resultString = result["state"].ToString();
+                    OnNewLogMessage(result.ToString());
+                    return ParseResultStringToState(resultString);
                 }
             }
             return new State() {Status = State.InternalStatus.Good};
         }
+
+        private State ParseResultStringToState(string resultString)
+        {
+            if (string.IsNullOrEmpty(resultString))
+                return State.Undefined();
+            else if (resultString.Contains("Warning"))
+                return State.Warning();
+            else if (resultString.Contains("Alarm"))
+                return State.Alarm();
+            else
+                return State.Good();
+        }
+   
 
         public void DoSomething()
         {

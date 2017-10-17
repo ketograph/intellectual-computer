@@ -44,7 +44,7 @@ namespace ic_project_2
             for (int param = 0; param <= 4; param++)
             {
                 var state = kb.AskOneParameter(param, paramList[param]);
-                //SetStatus(param, state);
+                SetStatus(param, state);
             }
         }
 
