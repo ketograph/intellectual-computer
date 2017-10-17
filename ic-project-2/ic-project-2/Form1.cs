@@ -116,11 +116,15 @@ namespace ic_project_2
             kb = new KnowledgeBase();
             kb.LogMessageAdded += this.OnNewLogMessage;
             kb.LoadTurtleFile();
-            textBoxPar1.DataBindings.Add("Text", parameters, "Parameter1");
-            textBoxPar2.DataBindings.Add("Text", parameters, "Parameter2");
-            //textBoxPar3.DataBindings.Add("Text", parameters.Parameter3 "Name");
-            //textBoxPar4.DataBindings.Add("Text", parameters.Parameter4, "Name");
-            //textBoxPar5.DataBindings.Add("Text", parameters.Parameter5, "Name");
+            var ds = new DataSet();
+
+            parameters.PropertyChanged += delegate
+            { // this should be in a *regular* method so that you can -= it when changing bindings...
+                textBoxPar1.Invoke((MethodInvoker)delegate
+                {
+                    textBoxPar1.Text = parameters.Latitude.ToString();
+                });
+            };
 
         }
 
