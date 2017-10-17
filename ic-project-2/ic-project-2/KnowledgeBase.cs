@@ -17,6 +17,7 @@ namespace ic_project_2
     public class KnowledgeBase
     {
         Notation3Parser parser;
+        SparqlQueryParser queryParser;
         Graph graph;
         string knowledgeBaseFile = "KB_Data_ThomasRossberg.n3";
 
@@ -26,6 +27,7 @@ namespace ic_project_2
         public KnowledgeBase()
         {
             parser = new Notation3Parser();
+            queryParser = new SparqlQueryParser();
             graph = new Graph();
         }
 
@@ -33,7 +35,7 @@ namespace ic_project_2
         public void LoadTurtleFile()
         {
             parser.Load(graph, knowledgeBaseFile);
-            //OnNewLogMessage("Loaded Notation-3 file.");
+            OnNewLogMessage("Loaded Notation-3 file.");
             //OnNewLogMessage("Nodes:");
             //foreach (Triple triple in graph.Triples)
             //{
@@ -63,7 +65,8 @@ WHERE {
         public State AskOneParameter(int parameter, int value)
         {
             string sparqlQuery = CreateSparqlQuery(parameter, value);
-            SparqlResultSet resultSet = graph.ExecuteQuery(sparqlQuery) as SparqlResultSet;
+            var q = queryParser.ParseFromString(sparqlQuery);
+            SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
 
             if (resultSet != null)
             {
