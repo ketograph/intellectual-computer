@@ -13,15 +13,18 @@ int ValueA4 = 0;
 int ValueA5 = 0;
 
 // Define the digital output pin for the LED
-int PinD2 = 2;
+int WARNING_LAMP = 2; //WarningLamp
+int ALARM_LAMP = 3; //AlarmLamp
 
-long parsedStatusCode = 1; 
+long parsedStatusCodeWarning = 1; //Warning
+long parsedStatusCodeAlarm = 2; //Alarm
 
 void setup() {
   Serial.begin(9600);
-  pinMode(PinD2, OUTPUT);
-  digitalWrite(PinD2, HIGH);
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(WARNING_LAMP, OUTPUT);
+  digitalWrite(WARNING_LAMP, HIGH);
+  pinMode(ALARM_LAMP, OUTPUT); //
+  digitalWrite(ALARM_LAMP, HIGH);//
 }
 
 void ReadAnalogPins(){
@@ -56,12 +59,17 @@ void ReadSerialPort(){
 }
 
 void ToggleBuiltinLed(){
-  if(parsedStatusCode){
-    digitalWrite(LED_BUILTIN, HIGH);
+  if(parsedStatusCode==1){ //Chance lamp if warning or alarm
+    digitalWrite(WARNING_LAMP, HIGH);
+    digitalWrite(ALARM_LAMP, LOW);
   }
-  else{
-    digitalWrite(LED_BUILTIN, LOW);
-  }
+  else if(parsedStatusCode==2){
+    digitalWrite(WARNING_LAMP, LOW);
+    digitalWrite(ALARM_LAMP, HIGH);
+  } else {
+    digitalWrite(WARNING_LAMP, LOW);
+    digitalWrite(ALARM_LAMP, LOW);
+    }
 }
 
 void loop() {
