@@ -16,8 +16,10 @@ int ValueA5 = 0;
 int WARNING_LAMP = 2; //WarningLamp
 int ALARM_LAMP = 3; //AlarmLamp
 
-long parsedStatusCodeWarning = 1; //Warning
-long parsedStatusCodeAlarm = 2; //Alarm
+long STATUS_CODE_WARNING = 1; //Warning
+long STATUS_CODE_ALARM = 2; //Alarm
+
+long parsedStatusCode = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -53,17 +55,16 @@ void SendValuesSerialPort(){
 void ReadSerialPort(){
   if (Serial.available() > 0){
     // look for the next valid integer in the incoming serial stream:
-    int tmpCode = Serial.parseInt();
-    parsedStatusCode = tmpCode;
+    parsedStatusCode = Serial.parseInt();
   }
 }
 
 void ToggleBuiltinLed(){
-  if(parsedStatusCode==1){ //Chance lamp if warning or alarm
+  if(parsedStatusCode == STATUS_CODE_ALARM){ //Chance lamp if warning or alarm
     digitalWrite(WARNING_LAMP, HIGH);
     digitalWrite(ALARM_LAMP, LOW);
   }
-  else if(parsedStatusCode==2){
+  else if(parsedStatusCode == STATUS_CODE_WARNING){
     digitalWrite(WARNING_LAMP, LOW);
     digitalWrite(ALARM_LAMP, HIGH);
   } else {

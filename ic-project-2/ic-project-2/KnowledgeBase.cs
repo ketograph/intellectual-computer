@@ -70,21 +70,22 @@ WHERE {
 
             if (resultSet != null)
             {
-                OnNewLogMessage("Results for parameter" + parameter + " with value " + value);
                 if (resultSet.Count > 1)
-                    OnNewLogMessage("ERROR: There is more than one result for one parameter!");
-                else if (resultSet.Count == 0)
-                    OnNewLogMessage("Empty Result, everything good.");
-                else
                 {
-
+                    OnNewLogMessage("ERROR: There is more than one result for one parameter! This means there are overlapping Invervalls in the Knowledge Base.");
+                    throw new DataMisalignedException(@"There is more than one result for one parameter! This means there are overlapping Invervalls in the Knowledge Base." +
+                                    "Check the Knowdegle Base." +
+                                    "Parameter" + parameter + " Value: " + value);
+                }
+                else if (resultSet.Count == 1)
+                {
                     SparqlResult result = resultSet[0];
                     var resultString = result["state"].ToString();
                     OnNewLogMessage(result.ToString());
                     return ParseResultStringToState(resultString);
                 }
             }
-            return new State() {Status = State.InternalStatus.Good};
+            return new State() { Status = State.InternalStatus.Good };
         }
 
         private State ParseResultStringToState(string resultString)
@@ -98,7 +99,7 @@ WHERE {
             else
                 return State.Good();
         }
-   
+
 
         private string GetNodeString(INode node)
         {

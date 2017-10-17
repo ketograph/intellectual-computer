@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace ic_project_2
 {
-    public class State
+    public class State : IComparable
     {
         public enum InternalStatus
         {
@@ -18,6 +18,23 @@ namespace ic_project_2
         };
 
         public InternalStatus Status { get; set; }
+
+        public int GetStateCode()
+        {
+            switch (this.Status)
+            {
+                case InternalStatus.Good:
+                    return 0;
+                case InternalStatus.Warning:
+                    return 1;
+                case InternalStatus.Alarm:
+                    return 2;
+                case InternalStatus.Undefined:
+                    return -1;
+                default:
+                    return -1;
+            }
+        }
 
         public Color GetStateColor()
         {
@@ -50,6 +67,16 @@ namespace ic_project_2
         public static State Alarm()
         {
             return new State() { Status = State.InternalStatus.Alarm };
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null) return 1;
+            State otherState = obj as State;
+            if (otherState != null)
+                return this.GetStateCode().CompareTo(otherState.GetStateCode());
+            else
+                throw new ArgumentException("Object is not a Temperature");
         }
     }
 

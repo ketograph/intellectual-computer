@@ -49,7 +49,7 @@
 :Warning :par3 :Int3_Warning.
 :Int3_Warning rdf:type :Interval.
 :Int3_Warning 	:min 500;
-				:max 999.
+				:max 899.
 
 :Warning :par4 :Int4_Warning.
 :Int4_Warning rdf:type :Interval.

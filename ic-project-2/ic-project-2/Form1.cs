@@ -17,6 +17,7 @@ namespace ic_project_2
         KnowledgeBase kb;
         List<TextBox> textBoxList; // to iterate over all textboxes
         MeasuredParameters parameters = new MeasuredParameters();
+        States states = new States();
 
         public Form1()
         {
@@ -28,26 +29,49 @@ namespace ic_project_2
             serialPort?.Close();
         }
 
+        private void OnFormLoad(object sender, EventArgs e)
+        {
+            textBoxList = new List<TextBox>() { textBoxPar1, textBoxPar2, textBoxPar3, textBoxPar4, textBoxPar5 };
+            kb = new KnowledgeBase();
+            kb.LogMessageAdded += this.OnNewLogMessage;
+            kb.LoadTurtleFile();
+        }
+
         private void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort sp = (SerialPort)sender;
             string inParameterString = sp.ReadExisting();
             parameters.ParseParametersString(inParameterString);
-        //    SetParametersTextboxes(parameters);
+            SetParametersTextboxes(parameters);
             QueryEachParameterSeperatly(parameters);
+            SetStatusIndicators();
+            SendResponseToArduino();
+        }
+
+        private void SendResponseToArduino()
+        {
+            var statusCode = states.GetResultingState().GetStateCode().ToString();
+            OnNewLogMessage("Statuscode to Arduino: " + statusCode);
+            serialPort.Write(statusCode);
         }
 
         private void QueryEachParameterSeperatly(MeasuredParameters parameters)
         {
-            var paramList = parameters.ParameterList;
             for (int param = 0; param <= 4; param++)
             {
-                var state = kb.AskOneParameter(param, paramList[param]);
-                SetStatus(param, state);
+                states.CurrentStates[param] = kb.AskOneParameter(param, parameters.Parameters[param]);
             }
         }
 
-        private void SetStatus(int param, State state)
+        private void SetStatusIndicators()
+        {
+            for (int i = 0; i <= 4; i++)
+            {
+                SetStatusIndicator(i, states.CurrentStates[i]);
+            }
+        }
+
+        private void SetStatusIndicator(int param, State state)
         {
             if (textBoxList[param].InvokeRequired)
             {
@@ -67,19 +91,30 @@ namespace ic_project_2
             {
                 if (textBoxList[n].InvokeRequired)
                 {
-                    Action act = () => textBoxList[n].Text = parameters.ParameterList[n].ToString();
+                    Action act = () => textBoxList[n].Text = parameters.Parameters[n].ToString();
                     textBoxList[n].Invoke(act);
                 }
                 else
                 {
-                    textBoxList[n].Text = parameters.ParameterList[n].ToString();
+                    textBoxList[n].Text = parameters.Parameters[n].ToString();
                 }
             }
         }
 
+        #region ComPortSelection
         private void comboBoxComPort_DropDown(object sender, EventArgs e)
         {
             comboBoxComPort.Items.AddRange(GetAllComPorts().ToArray());
+        }
+
+        public List<string> GetAllComPorts()
+        {
+            List<String> allPorts = new List<String>();
+            foreach (String portName in System.IO.Ports.SerialPort.GetPortNames())
+            {
+                allPorts.Add(portName);
+            }
+            return allPorts;
         }
 
         private void comboBoxComPort_SelectionChangeCommitted(object sender, EventArgs e)
@@ -108,54 +143,30 @@ namespace ic_project_2
             {
                 StatusLabelBar.Text = "Port " + comPortString + " is open.";
             }
-
         }
-        private void OnFormLoad(object sender, EventArgs e)
-        {
-            textBoxList = new List<TextBox>() { textBoxPar1, textBoxPar2, textBoxPar3, textBoxPar4, textBoxPar5 };
-            kb = new KnowledgeBase();
-            kb.LogMessageAdded += this.OnNewLogMessage;
-            kb.LoadTurtleFile();
-            var ds = new DataSet();
-
-            parameters.PropertyChanged += delegate
-            { // this should be in a *regular* method so that you can -= it when changing bindings...
-                textBoxPar1.Invoke((MethodInvoker)delegate
-                {
-                    textBoxPar1.Text = parameters.Latitude.ToString();
-                });
-            };
-
-        }
+        #endregion
 
         private void OnNewLogMessage(object source, LogMessageEventArgs e)
+        {
+            OnNewLogMessage(e.Message);
+        }
+
+        private void OnNewLogMessage(string logMessage)
         {
             if (listBox1.InvokeRequired)
             {
                 Action act = () =>
                 {
-                    listBox1.Items.Add(e.Message);
+                    listBox1.Items.Add(logMessage);
                     listBox1.TopIndex = listBox1.Items.Count - 1; // scroll to bottom
                 };
                 listBox1.Invoke(act);
             }
             else
             {
-                listBox1.Items.Add(e.Message);
+                listBox1.Items.Add(logMessage);
                 listBox1.TopIndex = listBox1.Items.Count - 1; // scroll to bottom
-
             }
-        }
-
-
-        public List<string> GetAllComPorts()
-        {
-            List<String> allPorts = new List<String>();
-            foreach (String portName in System.IO.Ports.SerialPort.GetPortNames())
-            {
-                allPorts.Add(portName);
-            }
-            return allPorts;
         }
     }
 }
