@@ -22,11 +22,11 @@ namespace ic_project_2
                 return;
             var sensorValues = sensorsString.Split(';');
 
-            Values[0] = int.Parse(sensorValues[0]);
-            Values[1] = int.Parse(sensorValues[1]);
-            Values[2] = int.Parse(sensorValues[2]);
-            Values[3] = int.Parse(sensorValues[3]);
-            Values[4] = int.Parse(sensorValues[4]);
+            Values[0] = int.Parse(sensorValues[1]);
+            Values[1] = int.Parse(sensorValues[2]);
+            Values[2] = int.Parse(sensorValues[3]);
+            Values[3] = int.Parse(sensorValues[4]);
+            Values[4] = int.Parse(sensorValues[5]);
         }
 
         private bool IsSensorStringCorrect(string sensorString)
@@ -35,6 +35,8 @@ namespace ic_project_2
                 return false;
             if (!sensorString.Contains(";"))
                 return false;
+            if (!(sensorString.StartsWith("VALUES") || sensorString.StartsWith("SET")))
+                return false;
             var numbers = sensorString.Split(';');
 
             // check if there are at least 4 values
@@ -42,7 +44,7 @@ namespace ic_project_2
                 return false;
 
             // check if each of the first five values is not empty or longer then 4 chars
-            for (int n = 0; n <= 4; n++)
+            for (int n = 1; n <= 5; n++)
             {
                 if (numbers[n].Length == 0 || numbers[n].Length > 4)
                     return false;

@@ -1,9 +1,11 @@
 // Definition of the input pins
-int PinA1 = 14;
-int PinA2 = 15;
-int PinA3 = 16;
-int PinA4 = 17;
-int PinA5 = 18;
+int PinA1 = 15;
+int PinA2 = 16;
+int PinA3 = 17;
+int PinA4 = 18;
+int PinA5 = 19;
+
+int PinD13 = 13; // Set Control Pin
 
 // Definition of the variable storing the value
 int ValueA1 = 0;
@@ -11,6 +13,7 @@ int ValueA2 = 0;
 int ValueA3 = 0;
 int ValueA4 = 0;
 int ValueA5 = 0;
+bool ValueD13 = false;
 
 // Define the digital output pin for the LED
 int WARNING_LAMP = 2; //WarningLamp
@@ -23,6 +26,7 @@ long parsedStatusCode = 0;
 
 void setup() {
   Serial.begin(9600);
+  pinMode(PinD13, 
   pinMode(WARNING_LAMP, OUTPUT);
   digitalWrite(WARNING_LAMP, HIGH);
   pinMode(ALARM_LAMP, OUTPUT); //
@@ -39,6 +43,7 @@ void ReadAnalogPins(){
 
 void SendValuesSerialPort(){
   Serial.flush(); // Waits for the transmission of outgoing serial data to complete
+  Serial.print("VALUES;");
   Serial.print(ValueA1);
   Serial.print(";");
   Serial.print(ValueA2);
@@ -50,6 +55,14 @@ void SendValuesSerialPort(){
   Serial.print(ValueA5);
   Serial.print(";");
   Serial.print("\n");
+}
+
+void SendSetValue(){
+  Serial.flush();
+  Serial.print("SET;");
+  Serial.print("1;"); // number of the parameter
+  Serial.print(ValueA1);
+  Serial.println(";");
 }
 
 void ReadSerialPort(){

@@ -44,7 +44,7 @@ namespace ic_project_2
             parameters.ParseSensorValuesString(inParameterString);
             SetParametersTextboxes(parameters);
             QueryEachParameterSeperatly(parameters);
-            SetStatusIndicators();
+            //SetStatusIndicators();
             SendResponseToArduino();
         }
 
@@ -59,7 +59,7 @@ namespace ic_project_2
         {
             for (int param = 0; param <= 4; param++)
             {
-                states.CurrentStates[param] = kb.AskOneParameter(param, parameters.Values[param]);
+                states.CurrentStates[param] = kb.AskOneParameter(param + 1, parameters.Values[param]);
             }
         }
 
@@ -104,6 +104,7 @@ namespace ic_project_2
         #region ComPortSelection
         private void comboBoxComPort_DropDown(object sender, EventArgs e)
         {
+            comboBoxComPort.Items.Clear();
             comboBoxComPort.Items.AddRange(GetAllComPorts().ToArray());
         }
 
