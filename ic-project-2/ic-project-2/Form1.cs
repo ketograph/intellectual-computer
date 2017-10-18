@@ -16,7 +16,7 @@ namespace ic_project_2
         SerialPort serialPort;
         KnowledgeBase kb;
         List<TextBox> textBoxList; // to iterate over all textboxes
-        MeasuredParameters parameters = new MeasuredParameters();
+        SensorValues parameters = new SensorValues();
         States states = new States();
 
         public Form1()
@@ -41,7 +41,7 @@ namespace ic_project_2
         {
             SerialPort sp = (SerialPort)sender;
             string inParameterString = sp.ReadExisting();
-            parameters.ParseParametersString(inParameterString);
+            parameters.ParseSensorValuesString(inParameterString);
             SetParametersTextboxes(parameters);
             QueryEachParameterSeperatly(parameters);
             SetStatusIndicators();
@@ -55,11 +55,11 @@ namespace ic_project_2
             serialPort.Write(statusCode);
         }
 
-        private void QueryEachParameterSeperatly(MeasuredParameters parameters)
+        private void QueryEachParameterSeperatly(SensorValues parameters)
         {
             for (int param = 0; param <= 4; param++)
             {
-                states.CurrentStates[param] = kb.AskOneParameter(param, parameters.Parameters[param]);
+                states.CurrentStates[param] = kb.AskOneParameter(param, parameters.Values[param]);
             }
         }
 
@@ -84,19 +84,19 @@ namespace ic_project_2
             }
         }
 
-        public void SetParametersTextboxes(MeasuredParameters parameters)
+        public void SetParametersTextboxes(SensorValues parameters)
         {
 
             for (int n = 0; n < 5; n++)
             {
                 if (textBoxList[n].InvokeRequired)
                 {
-                    Action act = () => textBoxList[n].Text = parameters.Parameters[n].ToString();
+                    Action act = () => textBoxList[n].Text = parameters.Values[n].ToString();
                     textBoxList[n].Invoke(act);
                 }
                 else
                 {
-                    textBoxList[n].Text = parameters.Parameters[n].ToString();
+                    textBoxList[n].Text = parameters.Values[n].ToString();
                 }
             }
         }

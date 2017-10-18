@@ -7,6 +7,20 @@ using VDS.RDF;
 using VDS.RDF.Parsing;
 using VDS.RDF.Query;
 
+
+// TODO: implement
+// Graph g.Assert()
+// Graph g.Save()
+// NTriplesWriter
+
+//INode n = rdf.GetUriNode(new Uri("http://www.example.org/destDetails#" + destID));
+//        if (n != null)
+//        {
+//            rdf.Retract(rdf.GetTriplesWithSubject(n));
+//        }
+//        rdf.SaveToFile(rdfDatoteka);
+
+
 namespace ic_project_2
 {
     public class LogMessageEventArgs : System.EventArgs
@@ -43,22 +57,24 @@ namespace ic_project_2
             //}
         }
 
+
+
         public string CreateSparqlQuery(int parameter, int value)
         {
             return @"
-PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
-PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX : <http://thomas.spb.ru/#>
+                PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
+                PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX : <http://thomas.spb.ru/#>
 
-SELECT ?state
-WHERE {
-    ?state :par" + parameter + @" ?int.
-    ?int :min ?min.
-        FILTER(?min < " + value.ToString() + @").
-    ?int :max ?max.
-        FILTER(?max > " + value.ToString() + @").
+                SELECT ?state
+                WHERE {
+                    ?state :par" + parameter + @" ?int.
+                    ?int :min ?min.
+                        FILTER(?min < " + value.ToString() + @").
+                    ?int :max ?max.
+                        FILTER(?max > " + value.ToString() + @").
 
-}";
+                }";
         }
 
 

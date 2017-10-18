@@ -183,11 +183,11 @@ namespace ic_project_2
             // 
             // measuredParametersBindingSource
             // 
-            this.measuredParametersBindingSource.DataSource = typeof(ic_project_2.MeasuredParameters);
+            this.measuredParametersBindingSource.DataSource = typeof(ic_project_2.SensorValues);
             // 
             // measuredParametersBindingSource1
             // 
-            this.measuredParametersBindingSource1.DataSource = typeof(ic_project_2.MeasuredParameters);
+            this.measuredParametersBindingSource1.DataSource = typeof(ic_project_2.SensorValues);
             // 
             // Form1
             // 
