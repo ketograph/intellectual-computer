@@ -41,7 +41,7 @@ namespace ic_project_2
             switch (this.Status)
             {
                 case InternalStatus.Good:
-                    return Color.Green;
+                    return Color.LightGreen;
                 case InternalStatus.Warning:
                     return Color.Yellow;
                 case InternalStatus.Alarm:

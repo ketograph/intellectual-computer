@@ -36,20 +36,25 @@ void setup() {
   pinMode(WARNING_LAMP, OUTPUT);
   pinMode(ALARM_LAMP, OUTPUT); 
 
-  // Blink at startup
-  digitalWrite(WARNING_LAMP, HIGH);
-  digitalWrite(ALARM_LAMP, HIGH);
-  delay(500);
-  digitalWrite(WARNING_LAMP, LOW);
-  digitalWrite(ALARM_LAMP, LOW);
-  delay(500);
-  digitalWrite(WARNING_LAMP, HIGH);
-  digitalWrite(ALARM_LAMP, HIGH);
-  delay(500);
-  digitalWrite(WARNING_LAMP, LOW);
-  digitalWrite(ALARM_LAMP, LOW);
+  BlinkAtStartup();
 }
-
+void BlinkAtStartup(){
+  digitalWrite(WARNING_LAMP, HIGH);
+  digitalWrite(ALARM_LAMP, HIGH);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(500);
+  digitalWrite(WARNING_LAMP, LOW);
+  digitalWrite(ALARM_LAMP, LOW);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(500);
+  digitalWrite(WARNING_LAMP, HIGH);
+  digitalWrite(ALARM_LAMP, HIGH);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(500);
+  digitalWrite(WARNING_LAMP, LOW);
+  digitalWrite(ALARM_LAMP, LOW);
+  digitalWrite(LED_BUILTIN, LOW);
+}
 void ReadAnalogPins(){
   ValueA1 = analogRead(PinA1);
   ValueA2 = analogRead(PinA2);
@@ -118,6 +123,7 @@ void ToggleBuiltinLed(){
 }
 
 void loop() {
+  ValueD13 = false;
   if(parsedStatusCode == STATUS_CODE_GOOD){
     BuiltinLedOn();
   }
@@ -127,7 +133,9 @@ void loop() {
   else if (parsedStatusCode == STATUS_CODE_ALARM){
     every(100){ToggleBuiltinLed();}
   }
- 
+ every(2000){
+  ValueD13 = true;
+ }
   every(1000){
     ReadAnalogPins();
     SendValuesSerialPort(); 

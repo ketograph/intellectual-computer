@@ -16,7 +16,8 @@ namespace ic_project_2
         SerialPort serialPort;
         KnowledgeBase kb;
         List<TextBox> textBoxList; // to iterate over all textboxes
-        SensorValues parameters = new SensorValues();
+        List<Button> SetButtonList; // to iterate over all set buttons
+        SensorSetValues parameters = new SensorSetValues();
         States states = new States();
 
         public Form1()
@@ -32,6 +33,7 @@ namespace ic_project_2
         private void OnFormLoad(object sender, EventArgs e)
         {
             textBoxList = new List<TextBox>() { textBoxPar1, textBoxPar2, textBoxPar3, textBoxPar4, textBoxPar5 };
+            SetButtonList = new List<Button>() { SetButton1, SetButton2, SetButton3, SetButton4, SetButton5 };
             kb = new KnowledgeBase();
             kb.LogMessageAdded += this.OnNewLogMessage;
             kb.LoadTurtleFile();
@@ -44,8 +46,38 @@ namespace ic_project_2
             parameters.ParseSensorValuesString(inParameterString);
             SetSensorValuesInTextboxes(parameters);
             QueryEachParameterSeperatly(parameters);
-            //SetStatusIndicators();
+            SetStatusIndicators();
+            SetSetIndicators();
             SendResponseToArduino();
+        }
+
+        private void SetSetIndicators()
+        {
+            for (int i = 0; i <= 4; i++)
+            {
+                SetSetIndicator(i, parameters.SetValues[i]);
+            }
+        }
+
+        private void SetSetIndicator(int i, bool v)
+        {
+            Color newColor = v ? Color.DarkGray : Color.White;
+            string newText = v ? "Set" : "NoSet";
+            
+            if (SetButtonList[i].InvokeRequired)
+            {
+                Action act = () =>
+                {
+                    SetButtonList[i].BackColor = newColor;
+                    SetButtonList[i].Text = newText;
+                };
+                SetButtonList[i].Invoke(act);
+            }
+            else
+            {
+                SetButtonList[i].BackColor = newColor;
+                SetButtonList[i].Text = newText;
+            }
         }
 
         private void SendResponseToArduino()
@@ -55,11 +87,11 @@ namespace ic_project_2
             serialPort.WriteLine(statusCode);
         }
 
-        private void QueryEachParameterSeperatly(SensorValues parameters)
+        private void QueryEachParameterSeperatly(SensorSetValues parameters)
         {
             for (int param = 0; param <= 4; param++)
             {
-                states.CurrentStates[param] = kb.AskOneParameter(param + 1, parameters.Values[param]);
+                states.CurrentStates[param] = kb.AskOneParameter(param + 1, parameters.SensorValue[param]);
             }
         }
 
@@ -84,19 +116,19 @@ namespace ic_project_2
             }
         }
 
-        public void SetSensorValuesInTextboxes(SensorValues parameters)
+        public void SetSensorValuesInTextboxes(SensorSetValues parameters)
         {
 
             for (int n = 0; n < 5; n++)
             {
                 if (textBoxList[n].InvokeRequired)
                 {
-                    Action act = () => textBoxList[n].Text = parameters.Values[n].ToString();
+                    Action act = () => textBoxList[n].Text = parameters.SensorValue[n].ToString();
                     textBoxList[n].Invoke(act);
                 }
                 else
                 {
-                    textBoxList[n].Text = parameters.Values[n].ToString();
+                    textBoxList[n].Text = parameters.SensorValue[n].ToString();
                 }
             }
         }

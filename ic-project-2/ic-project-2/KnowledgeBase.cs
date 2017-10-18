@@ -45,14 +45,21 @@ namespace ic_project_2
             graph = new Graph();
         }
 
-
         public void LoadTurtleFile()
         {
             parser.Load(graph, knowledgeBaseFile);
             OnNewLogMessage("Loaded Notation-3 file.");
         }
 
-
+        /// <summary>
+        /// Replaces one Alarm value in the knowledge database with a new one.
+        /// </summary>
+        /// <param name="parameter">Which parameter to use</param>
+        /// <param name="newValue">New value to insert into the knowledge base</param>
+        public void ReplaceOneAlarmValue(int parameter, int newValue)
+        {
+            
+        }
 
         public string CreateSparqlQuery(int parameter, int value)
         {
@@ -95,8 +102,12 @@ namespace ic_project_2
                     OnNewLogMessage(result.ToString());
                     return ParseResultStringToState(resultString);
                 }
+                else if(resultSet.Count == 0)
+                {
+                    return State.Good();
+                }
             }
-            return new State() { Status = State.InternalStatus.Good };
+            return State.Undefined();
         }
 
         private State ParseResultStringToState(string resultString)
