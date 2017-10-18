@@ -19,18 +19,30 @@ bool ValueD13 = false;
 int WARNING_LAMP = 2; //WarningLamp
 int ALARM_LAMP = 3; //AlarmLamp
 
-long STATUS_CODE_WARNING = 1; //Warning
-long STATUS_CODE_ALARM = 2; //Alarm
+long STATUS_CODE_GOOD = 1; // Everything is good
+long STATUS_CODE_WARNING = 2; //Warning
+long STATUS_CODE_ALARM = 3; //Alarm
 
 long parsedStatusCode = 0;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(PinD13, 
+  pinMode(PinD13, INPUT);
   pinMode(WARNING_LAMP, OUTPUT);
+  pinMode(ALARM_LAMP, OUTPUT); 
+
+  // Blink at startup
   digitalWrite(WARNING_LAMP, HIGH);
-  pinMode(ALARM_LAMP, OUTPUT); //
-  digitalWrite(ALARM_LAMP, HIGH);//
+  digitalWrite(ALARM_LAMP, HIGH);
+  delay(500);
+  digitalWrite(WARNING_LAMP, LOW);
+  digitalWrite(ALARM_LAMP, LOW);
+  delay(500);
+  digitalWrite(WARNING_LAMP, HIGH);
+  digitalWrite(ALARM_LAMP, HIGH);
+  delay(500);
+  digitalWrite(WARNING_LAMP, LOW);
+  digitalWrite(ALARM_LAMP, LOW);
 }
 
 void ReadAnalogPins(){
@@ -80,10 +92,11 @@ void ToggleBuiltinLed(){
   else if(parsedStatusCode == STATUS_CODE_WARNING){
     digitalWrite(WARNING_LAMP, LOW);
     digitalWrite(ALARM_LAMP, HIGH);
-  } else {
+  } 
+  else if(parsedStatusCode == STATUS_CODE_GOOD){
     digitalWrite(WARNING_LAMP, LOW);
     digitalWrite(ALARM_LAMP, LOW);
-    }
+  }
 }
 
 void loop() {

@@ -52,7 +52,7 @@ namespace ic_project_2
         {
             var statusCode = states.GetResultingState().GetStateCode().ToString();
             OnNewLogMessage("Statuscode to Arduino: " + statusCode);
-            serialPort.Write(statusCode);
+            serialPort.WriteLine(statusCode);
         }
 
         private void QueryEachParameterSeperatly(SensorValues parameters)

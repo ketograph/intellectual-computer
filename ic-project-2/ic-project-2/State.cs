@@ -24,11 +24,11 @@ namespace ic_project_2
             switch (this.Status)
             {
                 case InternalStatus.Good:
-                    return 0;
-                case InternalStatus.Warning:
                     return 1;
-                case InternalStatus.Alarm:
+                case InternalStatus.Warning:
                     return 2;
+                case InternalStatus.Alarm:
+                    return 3;
                 case InternalStatus.Undefined:
                     return -1;
                 default:
