@@ -59,7 +59,7 @@ namespace ic_project_2
         {
             for (int param = 0; param <= 4; param++)
             {
-                states.CurrentStates[param] = kb.AskOneParameter(param, parameters.Values[param]);
+                states.CurrentStates[param] = kb.AskOneParameter(param+1, parameters.Values[param]);
             }
         }
 
