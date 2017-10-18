@@ -42,7 +42,7 @@ namespace ic_project_2
             SerialPort sp = (SerialPort)sender;
             string inParameterString = sp.ReadExisting();
             parameters.ParseSensorValuesString(inParameterString);
-            SetParametersTextboxes(parameters);
+            SetSensorValuesInTextboxes(parameters);
             QueryEachParameterSeperatly(parameters);
             //SetStatusIndicators();
             SendResponseToArduino();
@@ -84,7 +84,7 @@ namespace ic_project_2
             }
         }
 
-        public void SetParametersTextboxes(SensorValues parameters)
+        public void SetSensorValuesInTextboxes(SensorValues parameters)
         {
 
             for (int n = 0; n < 5; n++)
