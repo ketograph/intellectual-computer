@@ -29,7 +29,9 @@ void setup() {
   Serial.begin(9600);
   pinMode(PinD13, INPUT);
   pinMode(WARNING_LAMP, OUTPUT);
-  pinMode(ALARM_LAMP, OUTPUT); //
+  pinMode(ALARM_LAMP, OUTPUT); 
+
+  // Blink at startup
   digitalWrite(WARNING_LAMP, HIGH);
   digitalWrite(ALARM_LAMP, HIGH);
   delay(500);
