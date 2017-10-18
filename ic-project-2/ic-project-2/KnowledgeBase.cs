@@ -50,11 +50,6 @@ namespace ic_project_2
         {
             parser.Load(graph, knowledgeBaseFile);
             OnNewLogMessage("Loaded Notation-3 file.");
-            //OnNewLogMessage("Nodes:");
-            //foreach (Triple triple in graph.Triples)
-            //{
-            //    OnNewLogMessage(GetNodeString(triple.Subject) + " " + GetNodeString(triple.Predicate) + " " + GetNodeString(triple.Object));
-            //}
         }
 
 
