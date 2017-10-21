@@ -49,17 +49,154 @@ namespace ic_project_2
         {
             parser.Load(graph, knowledgeBaseFile);
             OnNewLogMessage("Loaded Notation-3 file.");
+            SetNewAlarmValue(100);
         }
 
-        /// <summary>
-        /// Replaces one Alarm value in the knowledge database with a new one.
-        /// </summary>
-        /// <param name="parameter">Which parameter to use</param>
-        /// <param name="newValue">New value to insert into the knowledge base</param>
-        public void ReplaceOneAlarmValue(int parameter, int newValue)
+        public void SetNewAlarmValue(int newAlarmValue)
         {
-            
+            // -----------------------------------------
+            // |  Good  |     Warning  |      Alarm    |
+            // |  ^     |           ^  |    ^          |
+            // -----------------------------------------
+            // new value can be in the ranges: inside Good, Alarm or Warning
+
+            int triplesCountBefore;
+            int triplesCountAfter;
+
+
+            triplesCountBefore = graph.Triples.Count;
+
+            if (CheckIfInsideGoodRange(newAlarmValue))
+            {
+                // min warning value should be newAlarmValue-1
+                // max warning value should be newAlarmValue-1
+                // min alarm value should be newAlarmValue
+                SetWarningAndAlarm(newAlarmValue);
+            }
+            else if (CheckIfInsideWarningRange(newAlarmValue))
+            {
+                // max warning value should be newAlarmValue-1
+                // min alarm value should be newAlarmValue
+                SetAlarm(newAlarmValue);
+            }
+            else if (CheckIfInsideAlarmRange(newAlarmValue))
+            {
+                // max warning value should be newAlarmValue-1
+                // min alarm value should be newAlarmValue
+                SetAlarm(newAlarmValue);
+            }
+            else
+                throw new Exception("Something went terribly wrong");
+
+
+            triplesCountAfter = graph.Triples.Count;
+            if (triplesCountBefore != triplesCountAfter)
+                throw new Exception("There has to be the same number of triples in the graph!");
+
         }
+
+        private void SetAlarm(int newAlarmValue)
+        {
+            ReplaceMaxWarningValue(newAlarmValue - 1);
+            ReplaceMinAlarmValue(newAlarmValue);
+        }
+
+        private void SetWarningAndAlarm(int newAlarmValue)
+        {
+            ReplaceMinWarningValue(newAlarmValue - 1);
+            ReplaceMaxWarningValue(newAlarmValue - 1);
+            ReplaceMinAlarmValue(newAlarmValue);
+        }
+
+        #region GetTriple
+        private Triple GetMinWarningTriple()
+        {
+            var uriIntervallWarning = new Uri("http://thomas.spb.ru/#Int1_Warning");
+            var nodeWarning = graph.GetUriNode(uriIntervallWarning);
+            var minWarningTriple = graph.GetTriplesWithSubject(nodeWarning).Where(x => x.Predicate.ToString().Contains("min")).First();
+            return minWarningTriple;
+        }
+        private Triple GetMaxWarningTriple()
+        {
+            var uriIntervallWarning = new Uri("http://thomas.spb.ru/#Int1_Warning");
+            var nodeWarning = graph.GetUriNode(uriIntervallWarning);
+            var maxWarningTriple = graph.GetTriplesWithSubject(nodeWarning).Where(x => x.Predicate.ToString().Contains("max")).First();
+            return maxWarningTriple;
+        }
+        private Triple GetMinAlarmTriple()
+        {
+            var uriIntervalAlarm = new Uri("http://thomas.spb.ru/#Int1_Alarm");
+            var nodeAlarm = graph.GetUriNode(uriIntervalAlarm);
+            var minAlarmTriple = graph.GetTriplesWithSubject(nodeAlarm).Where(x => x.Predicate.ToString().Contains("min")).First();
+            return minAlarmTriple;
+        }
+        private Triple GetMaxAlarmTriple()
+        {
+            var uriIntervalAlarm = new Uri("http://thomas.spb.ru/#Int1_Alarm");
+            var nodeAlarm = graph.GetUriNode(uriIntervalAlarm);
+            var maxAlarmTriple = graph.GetTriplesWithSubject(nodeAlarm).Where(x => x.Predicate.ToString().Contains("max")).First();
+            return maxAlarmTriple;
+        }
+        #endregion
+        #region CheckRanges
+        private bool CheckIfInsideGoodRange(int value)
+        {
+            if (value >= 0 && value < GetIntOfLiteralObjectOfTriple(GetMinWarningTriple()))
+                return true;
+            else
+                return false;
+        }
+        bool CheckIfInsideWarningRange(int value)
+        {
+            var valueMin = GetIntOfLiteralObjectOfTriple(GetMinWarningTriple());
+            var valueMax = GetIntOfLiteralObjectOfTriple(GetMaxWarningTriple());
+            if (value >= valueMin && value < valueMax)
+                return false;
+            else
+                return true;
+        }
+
+        bool CheckIfInsideAlarmRange(int value)
+        {
+            var valueMin = GetIntOfLiteralObjectOfTriple(GetMinAlarmTriple());
+            if (value >= valueMin && value <= 1023)
+                return false;
+            else
+                return true;
+        }
+        #endregion
+
+        int GetIntOfLiteralObjectOfTriple(Triple triple)
+        {
+            if (triple == null) return 0;
+            if (triple.Object == null) return 0;
+            if (triple.Object.GetType() != typeof(LiteralNode)) return 0;
+            return Int32.Parse((triple.Object as LiteralNode).Value);
+        }
+
+        void ReplaceMinWarningValue(int newValue)
+        {
+            ReplaceIntergerInGraph(GetMinWarningTriple(), newValue);
+        }
+
+        void ReplaceMaxWarningValue(int newValue)
+        {
+            ReplaceIntergerInGraph(GetMaxWarningTriple(), newValue);
+        }
+
+        void ReplaceMinAlarmValue(int newValue)
+        {
+            ReplaceIntergerInGraph(GetMinAlarmTriple(), newValue);
+        }
+
+        private void ReplaceIntergerInGraph(Triple triple, int newValue)
+        {
+            graph.Retract(triple);
+            var newNode = graph.CreateLiteralNode(newValue + "^^http://www.w3.org/2001/XMLSchema#integer");
+            var newTriple = new Triple(triple.Subject, triple.Predicate, newNode);
+            graph.Assert(newTriple);
+        }
+
 
         public string CreateSparqlQuery(int parameter, int value)
         {
@@ -102,7 +239,7 @@ namespace ic_project_2
                     OnNewLogMessage(result.ToString());
                     return ParseResultStringToState(resultString);
                 }
-                else if(resultSet.Count == 0)
+                else if (resultSet.Count == 0)
                 {
                     return State.Good();
                 }

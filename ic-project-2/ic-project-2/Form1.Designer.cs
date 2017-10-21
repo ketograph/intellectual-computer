@@ -138,7 +138,7 @@ namespace ic_project_2
             this.comboBoxComPort.Location = new System.Drawing.Point(92, 13);
             this.comboBoxComPort.Name = "comboBoxComPort";
             this.comboBoxComPort.Size = new System.Drawing.Size(100, 21);
-            this.comboBoxComPort.TabIndex = 11;
+            this.comboBoxComPort.TabIndex = 0;
             this.comboBoxComPort.DropDown += new System.EventHandler(this.comboBoxComPort_DropDown);
             this.comboBoxComPort.SelectionChangeCommitted += new System.EventHandler(this.comboBoxComPort_SelectionChangeCommitted);
             // 
