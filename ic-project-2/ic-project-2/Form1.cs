@@ -14,7 +14,7 @@ namespace ic_project_2
     public partial class Form1 : Form
     {
         SerialPort serialPort;
-        KnowledgeBase kb;
+        KnowledgeBase kb = new KnowledgeBase();
         List<TextBox> textBoxList; // to iterate over all textboxes
         List<Button> SetButtonList; // to iterate over all set buttons
         SensorSetValues parameters = new SensorSetValues();
@@ -34,7 +34,6 @@ namespace ic_project_2
         {
             textBoxList = new List<TextBox>() { textBoxPar1, textBoxPar2, textBoxPar3, textBoxPar4, textBoxPar5 };
             SetButtonList = new List<Button>() { SetButton1, SetButton2, SetButton3, SetButton4, SetButton5 };
-            kb = new KnowledgeBase();
             kb.LogMessageAdded += this.OnNewLogMessage;
             kb.LoadTurtleFile();
         }
@@ -46,9 +45,20 @@ namespace ic_project_2
             parameters.ParseSensorValuesString(inParameterString);
             SetSensorValuesInTextboxes(parameters);
             QueryEachParameterSeperatly(parameters);
+            SetNewAlarmValueParameter1();
             SetStatusIndicators();
             SetSetIndicators();
             SendResponseToArduino();
+        }
+
+
+        private void SetNewAlarmValueParameter1()
+        {
+            // Just set a new alarm value for parameter 1
+            if (parameters.SetValues[0])
+            {
+                kb.SetNewAlarmValueAndSaveFile(parameters.SensorValue[0]);
+            }
         }
 
         private void SetSetIndicators()
@@ -63,7 +73,7 @@ namespace ic_project_2
         {
             Color newColor = v ? Color.DarkGray : Color.White;
             string newText = v ? "Set" : "NoSet";
-            
+
             if (SetButtonList[i].InvokeRequired)
             {
                 Action act = () =>

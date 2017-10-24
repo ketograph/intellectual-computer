@@ -6,20 +6,7 @@ using System.Threading.Tasks;
 using VDS.RDF;
 using VDS.RDF.Parsing;
 using VDS.RDF.Query;
-
-
-// TODO: implement
-// Graph g.Assert()
-// Graph g.Save()
-// NTriplesWriter
-
-//INode n = rdf.GetUriNode(new Uri("http://www.example.org/destDetails#" + destID));
-//        if (n != null)
-//        {
-//            rdf.Retract(rdf.GetTriplesWithSubject(n));
-//        }
-//        rdf.SaveToFile(rdfDatoteka);
-
+using VDS.RDF.Writing;
 
 namespace ic_project_2
 {
@@ -28,6 +15,7 @@ namespace ic_project_2
         public string Message { get; set; }
     }
 
+    
     public class KnowledgeBase
     {
         Notation3Parser parser;
@@ -49,7 +37,23 @@ namespace ic_project_2
         {
             parser.Load(graph, knowledgeBaseFile);
             OnNewLogMessage("Loaded Notation-3 file.");
-            SetNewAlarmValue(100);
+        }
+
+        public void SaveGraphToFile(string filename)
+        {
+            if (string.IsNullOrWhiteSpace(filename) || !filename.EndsWith(".n3"))
+                throw new ArgumentException("Filename was empty or not ending with .n3");
+            var writer = new Notation3Writer();
+            writer.Save(graph, filename);
+            OnNewLogMessage("Saved changed Knowledge Base to " + filename);
+        }
+
+        public void SetNewAlarmValueAndSaveFile(int newAlarmValue)
+        {
+            OnNewLogMessage("Setting alarm value for Parameter 1 to " + newAlarmValue);
+            SetNewAlarmValue(newAlarmValue);
+            string newFilename = System.IO.Path.GetFileNameWithoutExtension(knowledgeBaseFile) + "-" + newAlarmValue.ToString() + ".n3";
+            SaveGraphToFile(newFilename);
         }
 
         public void SetNewAlarmValue(int newAlarmValue)
@@ -63,7 +67,6 @@ namespace ic_project_2
             int triplesCountBefore;
             int triplesCountAfter;
 
-
             triplesCountBefore = graph.Triples.Count;
 
             if (CheckIfInsideGoodRange(newAlarmValue))
@@ -73,13 +76,7 @@ namespace ic_project_2
                 // min alarm value should be newAlarmValue
                 SetWarningAndAlarm(newAlarmValue);
             }
-            else if (CheckIfInsideWarningRange(newAlarmValue))
-            {
-                // max warning value should be newAlarmValue-1
-                // min alarm value should be newAlarmValue
-                SetAlarm(newAlarmValue);
-            }
-            else if (CheckIfInsideAlarmRange(newAlarmValue))
+            else if (CheckIfInsideWarningOrAlarmRange(newAlarmValue))
             {
                 // max warning value should be newAlarmValue-1
                 // min alarm value should be newAlarmValue
@@ -92,7 +89,6 @@ namespace ic_project_2
             triplesCountAfter = graph.Triples.Count;
             if (triplesCountBefore != triplesCountAfter)
                 throw new Exception("There has to be the same number of triples in the graph!");
-
         }
 
         private void SetAlarm(int newAlarmValue)
@@ -108,7 +104,6 @@ namespace ic_project_2
             ReplaceMinAlarmValue(newAlarmValue);
         }
 
-        #region GetTriple
         private Triple GetMinWarningTriple()
         {
             var uriIntervallWarning = new Uri("http://thomas.spb.ru/#Int1_Warning");
@@ -137,63 +132,52 @@ namespace ic_project_2
             var maxAlarmTriple = graph.GetTriplesWithSubject(nodeAlarm).Where(x => x.Predicate.ToString().Contains("max")).First();
             return maxAlarmTriple;
         }
-        #endregion
-        #region CheckRanges
         private bool CheckIfInsideGoodRange(int value)
         {
-            if (value >= 0 && value < GetIntOfLiteralObjectOfTriple(GetMinWarningTriple()))
+            int minWarningValue = GetTripleObjectLiteralNodeValue(GetMinWarningTriple());
+            if (value >= 0 && value < minWarningValue)
                 return true;
             else
                 return false;
         }
-        bool CheckIfInsideWarningRange(int value)
+        bool CheckIfInsideWarningOrAlarmRange(int value)
         {
-            var valueMin = GetIntOfLiteralObjectOfTriple(GetMinWarningTriple());
-            var valueMax = GetIntOfLiteralObjectOfTriple(GetMaxWarningTriple());
+            var valueMin = GetTripleObjectLiteralNodeValue(GetMinWarningTriple());
+            var valueMax = GetTripleObjectLiteralNodeValue(GetMaxAlarmTriple());
             if (value >= valueMin && value < valueMax)
-                return false;
-            else
                 return true;
+            else
+                return false;
         }
 
-        bool CheckIfInsideAlarmRange(int value)
-        {
-            var valueMin = GetIntOfLiteralObjectOfTriple(GetMinAlarmTriple());
-            if (value >= valueMin && value <= 1023)
-                return false;
-            else
-                return true;
-        }
-        #endregion
-
-        int GetIntOfLiteralObjectOfTriple(Triple triple)
+        int GetTripleObjectLiteralNodeValue(Triple triple)
         {
             if (triple == null) return 0;
             if (triple.Object == null) return 0;
             if (triple.Object.GetType() != typeof(LiteralNode)) return 0;
             return Int32.Parse((triple.Object as LiteralNode).Value);
         }
-
         void ReplaceMinWarningValue(int newValue)
         {
-            ReplaceIntergerInGraph(GetMinWarningTriple(), newValue);
+            ReplaceTripleObjectLiteralNode(GetMinWarningTriple(), newValue);
         }
 
         void ReplaceMaxWarningValue(int newValue)
         {
-            ReplaceIntergerInGraph(GetMaxWarningTriple(), newValue);
+            ReplaceTripleObjectLiteralNode(GetMaxWarningTriple(), newValue);
         }
 
         void ReplaceMinAlarmValue(int newValue)
         {
-            ReplaceIntergerInGraph(GetMinAlarmTriple(), newValue);
+            ReplaceTripleObjectLiteralNode(GetMinAlarmTriple(), newValue);
         }
 
-        private void ReplaceIntergerInGraph(Triple triple, int newValue)
+        private void ReplaceTripleObjectLiteralNode(Triple triple, int newValue)
         {
             graph.Retract(triple);
-            var newNode = graph.CreateLiteralNode(newValue + "^^http://www.w3.org/2001/XMLSchema#integer");
-            var newTriple = new Triple(triple.Subject, triple.Predicate, newNode);
+            ILiteralNode number = graph.CreateLiteralNode(newValue.ToString(), UriFactory.Create(XmlSpecsHelper.XmlSchemaDataTypeInteger));
+
+            var newTriple = new Triple(triple.Subject, triple.Predicate, number);
             graph.Assert(newTriple);
         }
 

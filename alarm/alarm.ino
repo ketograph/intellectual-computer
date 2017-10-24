@@ -75,23 +75,15 @@ void SendValuesSerialPort(){
   Serial.print(";");
   Serial.print(ValueA5);
   Serial.print(";");
-  // Set Parameter 1?
+  // Set Parameter 1 to new Value?
   Serial.print(ValueD13);
   // Set all other Parameters? No!
   Serial.print(";0;0;0;0;");
   Serial.print("\n");
 }
 
-void SendSetValue(){
-  Serial.flush();
-  Serial.print("SET;");
-  Serial.print("1;"); // number of the parameter
-  Serial.print(ValueA1);
-  Serial.println(";");
-}
-
 void ReadSerialPort(){
-  if (Serial.available() > 0){
+  while (Serial.available() > 0){
     // look for the next valid integer in the incoming serial stream:
     parsedStatusCode = Serial.parseInt();
   }
