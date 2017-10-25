@@ -62,6 +62,9 @@ void ReadAnalogPins(){
   ValueA4 = analogRead(PinA4);
   ValueA5 = analogRead(PinA5);
 }
+void ReadDigitalPins(){
+  ValueD13 = digitalRead(PinD13);
+}
 
 void SendValuesSerialPort(){
   Serial.flush(); // Waits for the transmission of outgoing serial data to complete
@@ -126,10 +129,11 @@ void loop() {
     every(100){ToggleBuiltinLed();}
   }
  every(2000){
-  ValueD13 = true;
+  //ValueD13 = true;
  }
   every(1000){
     ReadAnalogPins();
+    ReadDigitalPins();
     SendValuesSerialPort(); 
     ReadSerialPort();
     SetStatusLeds();

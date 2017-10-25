@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -187,7 +188,7 @@ namespace ic_project_2
             return @"
                 PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX : <http://thomas.spb.ru/#>
+                PREFIX :        <http://thomas.spb.ru/#>
 
                 SELECT ?state
                 WHERE {

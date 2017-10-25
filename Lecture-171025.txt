@@ -1,0 +1,28 @@
+does not work:
+:alarm :pair : par1int1, par2int1.
+:par1Int1:min __.
+
+PARAMETERS VALUES
+- Seperatly: we already have that in the KB
+- simultaneously: we have to write that
+  - just use a lot of pairs? but the intervals have to have distinct names
+   :Alarm :pair :pair1.
+   :pair1 :par1  _Int1-v2_;
+        :par2  __;
+
+SELECT ?State
+WHERE
+{
+}
+
+
+RULES
+-> Form -> A-->B
+-> example -> (500<=par1 <= 1000) --> alarm
+             (------A------------)    (--B--)
+
+
+next Task:
+* represent tables of Lab1 with multiple values in KB
+* also represent them in Arduino
+* also we should show if it was caused by single/serperate parameter or by combined parameter
