@@ -1,0 +1,35 @@
+1) Schema (OWL)
+2) Schema with Rules
+
+* new concept map with all rules: also with combined ones
+  (not only Par1,...; also Pair1,...)
+
+                           (ALARMS)
+    /             |            |            \               \     
+  (Single)     (Pair)      (Triple)       (Quart)         (FivePar)
+/ | | |  \      [1]     /    |   |   \       [2]
+1 2 3 4  5           
+
+[1]        |
+        (Pair)
+          | 
+          v
+        (Pair1)
+     / (Par1)    \(Par2)
+  (Int1)        (Int2)
+
+[2]            | Quad
+            (Quad1)
+       / (Par1)  | (Par2)   \Par4   \Par5
+    (Int1)     (Int2)     (IntX)   (IntX)
+
+
+
+
+
+
+
+
+
+
+

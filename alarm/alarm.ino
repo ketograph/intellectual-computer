@@ -86,7 +86,7 @@ void SendValuesSerialPort(){
 }
 
 void ReadSerialPort(){
-  while (Serial.available() > 0){
+  if (Serial.available() > 0){
     // look for the next valid integer in the incoming serial stream:
     parsedStatusCode = Serial.parseInt();
   }

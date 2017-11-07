@@ -45,10 +45,121 @@ namespace ic_project_2
             parameters.ParseSensorValuesString(inParameterString);
             SetSensorValuesInTextboxes(parameters);
             QueryEachParameterSeperatly(parameters);
+            QueryEachParameterSimultan(parameters);
             SetNewAlarmValueParameter1();
             SetStatusIndicators();
             SetSetIndicators();
             SendResponseToArduino();
+        }
+
+        private void QueryEachParameterSimultan(SensorSetValues parameters)
+        {
+            setPairStatusButton(State.Alarm());
+        }
+
+        private void setPairStatusButton(State state)
+        {
+            Color newColor;
+            if (state.Status == State.InternalStatus.Alarm)
+            {
+                newColor = Color.Red;
+            } else if (state.Status == State.InternalStatus.Warning)
+                newColor = Color.Yellow;
+            else
+                newColor = Color.LightGreen;
+
+            Button button = buttonStatusPair;
+            if (button.InvokeRequired)
+            {
+                Action act = () =>
+                {
+                    button.BackColor = newColor;
+                };
+                button.Invoke(act);
+            }
+            else
+            {
+                button.BackColor = newColor;
+            }
+        }
+
+        private void setTripleStatusButton(State state)
+        {
+            Color newColor;
+            if (state.Status == State.InternalStatus.Alarm)
+            {
+                newColor = Color.Red;
+            }
+            else if (state.Status == State.InternalStatus.Warning)
+                newColor = Color.Yellow;
+            else
+                newColor = Color.LightGreen;
+
+            Button button = buttonStatusTriple;
+            if (button.InvokeRequired)
+            {
+                Action act = () =>
+                {
+                    button.BackColor = newColor;
+                };
+                button.Invoke(act);
+            }
+            else
+            {
+                button.BackColor = newColor;
+            }
+        }
+        private void setQuadStatusButton(State state)
+        {
+            Color newColor;
+            if (state.Status == State.InternalStatus.Alarm)
+            {
+                newColor = Color.Red;
+            }
+            else if (state.Status == State.InternalStatus.Warning)
+                newColor = Color.Yellow;
+            else
+                newColor = Color.LightGreen;
+
+            Button button = buttonStatusQuad;
+            if (button.InvokeRequired)
+            {
+                Action act = () =>
+                {
+                    button.BackColor = newColor;
+                };
+                button.Invoke(act);
+            }
+            else
+            {
+                button.BackColor = newColor;
+            }
+        }
+        private void setFifthStatusButton(State state)
+        {
+            Color newColor;
+            if (state.Status == State.InternalStatus.Alarm)
+            {
+                newColor = Color.Red;
+            }
+            else if (state.Status == State.InternalStatus.Warning)
+                newColor = Color.Yellow;
+            else
+                newColor = Color.LightGreen;
+
+            Button button = buttonStatusFifth;
+            if (button.InvokeRequired)
+            {
+                Action act = () =>
+                {
+                    button.BackColor = newColor;
+                };
+                button.Invoke(act);
+            }
+            else
+            {
+                button.BackColor = newColor;
+            }
         }
 
 
@@ -210,6 +321,21 @@ namespace ic_project_2
                 listBox1.Items.Add(logMessage);
                 listBox1.TopIndex = listBox1.Items.Count - 1; // scroll to bottom
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonStatusQuad_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

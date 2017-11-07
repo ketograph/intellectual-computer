@@ -4,11 +4,14 @@
 
 @prefix : <http://thomas.spb.ru/#>.
 
+### I'm a comment!
 
 :State rdf:type owl:Class.
 :Alarm rdf:type :State.
 
-
+##
+## Single Parameters 
+##
 :Alarm :par1 :Int1_Alarm.
 :Int1_Alarm rdf:type :Interval.
 :Int1_Alarm 	:min 500;
@@ -60,6 +63,148 @@
 :Int5_Warning rdf:type :Interval.
 :Int5_Warning 	:min 100;
 				:max 599.
+			
+##
+## Pairs
+## PairX Parameter Y Intervall _ Warning/Alarm
+##
+:Warning			:Pair	:Pair1_Warning.
+:Pair1_Warning		:Par1	:Pair1_Int1_Warning.
+:Pair1_Int1_Warning	rdf:type	:Interval.
+:Pair1_Int1_Warning	:min	250;
+					:max	1023.
+:Pair1_Warning		:Par3	:Pair1_Int2_Warning.
+:Pair1_Int2_Warning	rdf:type	:Interval.
+:Pair1_Int2_Warning	:min	150;
+					:max	1023.
 
 
+:Warning			:Pair	:Pair2_Warning.
+:Pair2_Warning		:Par1	:Pair2_Int1_Warning.
+:Pair2_Int1_Warning	rdf:type	:Interval.
+:Pair2_Int1_Warning	:min	150;
+					:max	1023.
+:Pair2_Warning		:Par3	:Pair2_Int2_Warning.
+:Pair2_Int2_Warning	rdf:type	:Interval.
+:Pair2_Int2_Warning	:min	450;
+					:max	1023.
 
+
+##
+## Triples
+## 
+:Warning			:Triple		:Triple1_Warning.
+:Triple1_Warning	:Par1		:Triple1_Int1_Warning.
+:Triple1_Int1_Warning	rdf:type	:Interval.
+:Triple1_Int1_Warning	:min	150;
+			:max	1023.
+
+
+:Triple1_Warning	:Par3		:Triple1_Int3_Warning.
+:Triple1_Int3_Warning	rdf:type	:Interval.
+:Triple1_Int3_Warning	:min	150;
+			:max	1023.
+
+
+:Triple1_Warning	:Par4		:Triple1_Int4_Warning.
+:Triple1_Int4_Warning	rdf:type	:Interval.
+:Triple1_Int4_Warning	:min	300;
+			:max	1023.
+
+			
+:Warning			:Triple		:Triple2_Warning.
+:Triple2_Warning	:Par1		:Triple2_Int1_Warning.
+:Triple2_Int1_Warning	rdf:type	:Interval.
+:Triple2_Int1_Warning	:min	100;
+			:max	1023.
+:Triple2_Warning	:Par3		:Triple2_Int3_Warning.
+:Triple2_Int3_Warning	rdf:type	:Interval.
+:Triple2_Int3_Warning	:min	100;
+			:max	1023.
+:Triple2_Warning	:Par5		:Triple2_Int5_Warning.
+:Triple2_Int5_Warning	rdf:type	:Interval.
+:Triple2_Int5_Warning	:min	500;
+			:max	1023.
+
+
+:Warning			:Triple		:Triple3_Warning.
+:Triple3_Warning	:Par1		:Triple3_Int1_Warning.
+:Triple3_Int1_Warning	rdf:type	:Interval.
+:Triple3_Int1_Warning	:min	100;
+			:max	1023.
+:Triple3_Warning	:Par4		:Triple3_Int4_Warning.
+:Triple3_Int4_Warning	rdf:type	:Interval.
+:Triple3_Int4_Warning	:min	300;
+			:max	1023.
+:Triple3_Warning	:Par5		:Triple3_Int5_Warning.
+:Triple3_Int5_Warning	rdf:type	:Interval.
+:Triple3_Int5_Warning	:min	450;
+			:max	1023.
+
+
+## 
+## Quads 
+##
+## Quad1
+:Warning			:Quad		:Quad1_Warning.
+:Quad1_Warning	:Par1		:Quad1_Int1_Warning.
+:Quad1_Int1_Warning	rdf:type	:Interval.
+:Quad1_Int1_Warning	:min	100;
+				:max	1023.
+:Quad1_Warning	:Par2		:Quad1_Int2_Warning.
+:Quad1_Int2_Warning	rdf:type	:Interval.
+:Quad1_Int2_Warning	:min	700;
+			:max	1023.
+:Quad1_Warning	:Par4		:Quad1_Int3_Warning.
+:Quad1_Int3_Warning	rdf:type	:Interval.
+:Quad1_Int3_Warning	:min	200;
+			:max	1023.
+:Quad1_Warning	:Par5		:Quad1_Int4_Warning.
+:Quad1_Int4_Warning	rdf:type	:Interval.
+:Quad1_Int4_Warning	:min	350;
+			:max	1023.
+
+## Quad2
+:Warning			:Quad		:Quad2_Warning.
+:Quad2_Warning	:Par2		:Quad2_Int1_Warning.
+:Quad2_Int1_Warning	rdf:type	:Interval.
+:Quad2_Int1_Warning	:min	600;
+				:max	1023.
+:Quad2_Warning	:Par3		:Quad2_Int2_Warning.
+:Quad2_Int2_Warning	rdf:type	:Interval.
+:Quad2_Int2_Warning	:min	150;
+			:max	1023.
+:Quad2_Warning	:Par4		:Quad2_Int3_Warning.
+:Quad2_Int3_Warning	rdf:type	:Interval.
+:Quad2_Int3_Warning	:min	200;
+			:max	1023.
+:Quad2_Warning	:Par5		:Quad2_Int4_Warning.
+:Quad2_Int4_Warning	rdf:type	:Interval.
+:Quad2_Int4_Warning	:min	350;
+			:max	1023.
+
+## 
+## Fifth
+## 
+:Warning			:Fifth		:Fifth1_Warning.
+:Fifth1_Warning	:Par1		:Fifth1_Int1_Warning.
+:Fifth1_Int1_Warning	rdf:type	:Interval.
+:Fifth1_Int1_Warning	:min	100;
+				:max	1023.
+
+:Fifth1_Warning	:Par2		:Fifth1_Int1_Warning.
+:Fifth1_Int1_Warning	rdf:type	:Interval.
+:Fifth1_Int1_Warning	:min	500;
+				:max	1023.
+:Fifth1_Warning	:Par3		:Fifth1_Int2_Warning.
+:Fifth1_Int2_Warning	rdf:type	:Interval.
+:Fifth1_Int2_Warning	:min	50;
+			:max	1023.
+:Fifth1_Warning	:Par4		:Fifth1_Int3_Warning.
+:Fifth1_Int3_Warning	rdf:type	:Interval.
+:Fifth1_Int3_Warning	:min	100;
+			:max	1023.
+:Fifth1_Warning	:Par5		:Fifth1_Int4_Warning.
+:Fifth1_Int4_Warning	rdf:type	:Interval.
+:Fifth1_Int4_Warning	:min	500;
+			:max	1023.

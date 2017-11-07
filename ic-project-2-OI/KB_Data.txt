@@ -1,0 +1,60 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix : <http://KingOlli.de#>. 
+
+:State rdf:type rdf:Class.
+:Alarm rdf:type :State.
+
+:Alarm :par1 :Int1_Alarm.
+:Int1_Alarm rdf:type :Interval.
+:Int1_Alarm 	:min 300;
+	    :max 1023.
+
+:Alarm :par2 :Int2_Alarm.
+:Int2_Alarm rdf:type :Interval.
+:Int2_Alarm 	:min 800;
+	    :max 1023.
+
+:Alarm :par3 :Int3_Alarm.
+:Int3_Alarm rdf:type :Interval.
+:Int3_Alarm 	:min 250;
+	    :max 1023.
+
+:Alarm :par4 :Int4_Alarm.
+:Int4_Alarm rdf:type :Interval.
+:Int4_Alarm 	:min 400;
+	    :max 1023.
+
+:Alarm :par5 :Int5_Alarm.
+:Int5_Alarm rdf:type :Interval.
+:Int5_Alarm 	:min 500;
+	    :max 1023.
+
+
+:Warning rdf:type :State.
+:Warning :par1 :Int1_Warn.
+:Int1_Warn rdf:type :Interval.
+:Int1_Warn 	:min 200;
+	    :max 299.
+
+:Warning :par2 :Int2_Warn.
+:Int2_Warn rdf:type :Interval.
+:Int2_Warn 	:min 600;
+	    :max 799.
+
+:Warning :par3 :Int3_Warn.
+:Int3_Warn rdf:type :Interval.
+:Int3_Warn 	:min 100;
+	    :max 249.
+
+:Warning :par4 :Int4_Warn.
+:Int4_Warn rdf:type :Interval.
+:Int4_Warn 	:min 300;
+	    :max 399.
+
+:Warning :par5 :Int5_Warn.
+:Int5_Warn rdf:type :Interval.
+:Int5_Warn 	:min 350;
+	    :max 499.
+
+
+

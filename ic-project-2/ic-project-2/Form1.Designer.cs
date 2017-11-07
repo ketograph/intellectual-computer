@@ -49,6 +49,10 @@ namespace ic_project_2
             this.SetButton3 = new System.Windows.Forms.Button();
             this.SetButton4 = new System.Windows.Forms.Button();
             this.SetButton5 = new System.Windows.Forms.Button();
+            this.buttonStatusPair = new System.Windows.Forms.Button();
+            this.buttonStatusTriple = new System.Windows.Forms.Button();
+            this.buttonStatusQuad = new System.Windows.Forms.Button();
+            this.buttonStatusFifth = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -157,7 +161,7 @@ namespace ic_project_2
             this.StatusLabelBar});
             this.statusStrip1.Location = new System.Drawing.Point(0, 527);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(754, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1106, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -172,8 +176,9 @@ namespace ic_project_2
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(244, 13);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(498, 485);
+            this.listBox1.Size = new System.Drawing.Size(844, 485);
             this.listBox1.TabIndex = 15;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // SetButton1
             // 
@@ -220,11 +225,57 @@ namespace ic_project_2
             this.SetButton5.Text = "Set";
             this.SetButton5.UseVisualStyleBackColor = true;
             // 
+            // buttonStatusPair
+            // 
+            this.buttonStatusPair.Location = new System.Drawing.Point(15, 209);
+            this.buttonStatusPair.Name = "buttonStatusPair";
+            this.buttonStatusPair.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonStatusPair.Size = new System.Drawing.Size(61, 32);
+            this.buttonStatusPair.TabIndex = 21;
+            this.buttonStatusPair.Text = "Pair";
+            this.buttonStatusPair.UseVisualStyleBackColor = true;
+            this.buttonStatusPair.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // buttonStatusTriple
+            // 
+            this.buttonStatusTriple.Location = new System.Drawing.Point(12, 247);
+            this.buttonStatusTriple.Name = "buttonStatusTriple";
+            this.buttonStatusTriple.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonStatusTriple.Size = new System.Drawing.Size(61, 32);
+            this.buttonStatusTriple.TabIndex = 22;
+            this.buttonStatusTriple.Text = "Triple";
+            this.buttonStatusTriple.UseVisualStyleBackColor = true;
+            // 
+            // buttonStatusQuad
+            // 
+            this.buttonStatusQuad.Location = new System.Drawing.Point(12, 285);
+            this.buttonStatusQuad.Name = "buttonStatusQuad";
+            this.buttonStatusQuad.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonStatusQuad.Size = new System.Drawing.Size(61, 32);
+            this.buttonStatusQuad.TabIndex = 23;
+            this.buttonStatusQuad.Text = "Quad";
+            this.buttonStatusQuad.UseVisualStyleBackColor = true;
+            this.buttonStatusQuad.Click += new System.EventHandler(this.buttonStatusQuad_Click);
+            // 
+            // buttonStatusFifth
+            // 
+            this.buttonStatusFifth.Location = new System.Drawing.Point(12, 323);
+            this.buttonStatusFifth.Name = "buttonStatusFifth";
+            this.buttonStatusFifth.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonStatusFifth.Size = new System.Drawing.Size(61, 32);
+            this.buttonStatusFifth.TabIndex = 24;
+            this.buttonStatusFifth.Text = "Fifth";
+            this.buttonStatusFifth.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(754, 549);
+            this.ClientSize = new System.Drawing.Size(1106, 549);
+            this.Controls.Add(this.buttonStatusFifth);
+            this.Controls.Add(this.buttonStatusQuad);
+            this.Controls.Add(this.buttonStatusTriple);
+            this.Controls.Add(this.buttonStatusPair);
             this.Controls.Add(this.SetButton5);
             this.Controls.Add(this.SetButton4);
             this.Controls.Add(this.SetButton3);
@@ -276,6 +327,10 @@ namespace ic_project_2
         private System.Windows.Forms.Button SetButton3;
         private System.Windows.Forms.Button SetButton4;
         private System.Windows.Forms.Button SetButton5;
+        private System.Windows.Forms.Button buttonStatusPair;
+        private System.Windows.Forms.Button buttonStatusTriple;
+        private System.Windows.Forms.Button buttonStatusQuad;
+        private System.Windows.Forms.Button buttonStatusFifth;
     }
 }
 
