@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +15,13 @@ namespace ic_project_2
         public string Message { get; set; }
     }
 
-
+    
     public class KnowledgeBase
     {
         Notation3Parser parser;
         SparqlQueryParser queryParser;
         Graph graph;
-        string knowledgeBaseFile = "KB_Data_ThomasRossberg.n3";
+        string knowledgeBaseFile = "KB_Data.txt";
 
 
         public event EventHandler<LogMessageEventArgs> LogMessageAdded;
@@ -34,19 +33,16 @@ namespace ic_project_2
             graph = new Graph();
         }
 
-        public void LoadTurtleFile()
+        public void LoadTurtleFile() //Laden des Files für die Bearbeitung
         {
             parser.Load(graph, knowledgeBaseFile);
-            SensorSetValues s = new SensorSetValues();
-            //s.SensorValue = ["100", "200", "300", "400", "500"];
-            //AskParametersSimultaneausly(s);
-            OnNewLogMessage("Loaded Notation-3 file.");
+            OnNewLogMessage("Loaded Data file.");
         }
 
         public void SaveGraphToFile(string filename)
         {
-            if (string.IsNullOrWhiteSpace(filename) || !filename.EndsWith(".n3"))
-                throw new ArgumentException("Filename was empty or not ending with .n3");
+            if (string.IsNullOrWhiteSpace(filename) || !filename.EndsWith(".txt")) // Eventuell txt in n3 umbauen
+                throw new ArgumentException("Filename was empty or not ending with .txt");
             var writer = new Notation3Writer();
             writer.Save(graph, filename);
             OnNewLogMessage("Saved changed Knowledge Base to " + filename);
@@ -56,17 +52,13 @@ namespace ic_project_2
         {
             OnNewLogMessage("Setting alarm value for Parameter 1 to " + newAlarmValue);
             SetNewAlarmValue(newAlarmValue);
-            string newFilename = System.IO.Path.GetFileNameWithoutExtension(knowledgeBaseFile) + "-" + newAlarmValue.ToString() + ".n3";
+            string newFilename = System.IO.Path.GetFileNameWithoutExtension(knowledgeBaseFile) + "-" + newAlarmValue.ToString() + ".txt";
             SaveGraphToFile(newFilename);
         }
 
         public void SetNewAlarmValue(int newAlarmValue)
         {
-            // -----------------------------------------
-            // |  Good  |     Warning  |      Alarm    |
-            // |  ^     |           ^  |    ^          |
-            // -----------------------------------------
-            // new value can be in the ranges: inside Good, Alarm or Warning
+ 
 
             int triplesCountBefore;
             int triplesCountAfter;
@@ -110,28 +102,28 @@ namespace ic_project_2
 
         private Triple GetMinWarningTriple()
         {
-            var uriIntervallWarning = new Uri("http://thomas.spb.ru/#Int1_Warning");
+            var uriIntervallWarning = new Uri("http://KingOlli.de#Int1_Warning");
             var nodeWarning = graph.GetUriNode(uriIntervallWarning);
             var minWarningTriple = graph.GetTriplesWithSubject(nodeWarning).Where(x => x.Predicate.ToString().Contains("min")).First();
             return minWarningTriple;
         }
         private Triple GetMaxWarningTriple()
         {
-            var uriIntervallWarning = new Uri("http://thomas.spb.ru/#Int1_Warning");
+            var uriIntervallWarning = new Uri("http://KingOlli.de#Int1_Warning");
             var nodeWarning = graph.GetUriNode(uriIntervallWarning);
             var maxWarningTriple = graph.GetTriplesWithSubject(nodeWarning).Where(x => x.Predicate.ToString().Contains("max")).First();
             return maxWarningTriple;
         }
         private Triple GetMinAlarmTriple()
         {
-            var uriIntervalAlarm = new Uri("http://thomas.spb.ru/#Int1_Alarm");
+            var uriIntervalAlarm = new Uri("http://KingOlli.de#Int1_Alarm");
             var nodeAlarm = graph.GetUriNode(uriIntervalAlarm);
             var minAlarmTriple = graph.GetTriplesWithSubject(nodeAlarm).Where(x => x.Predicate.ToString().Contains("min")).First();
             return minAlarmTriple;
         }
         private Triple GetMaxAlarmTriple()
         {
-            var uriIntervalAlarm = new Uri("http://thomas.spb.ru/#Int1_Alarm");
+            var uriIntervalAlarm = new Uri("http://KingOlli.de#Int1_Alarm");
             var nodeAlarm = graph.GetUriNode(uriIntervalAlarm);
             var maxAlarmTriple = graph.GetTriplesWithSubject(nodeAlarm).Where(x => x.Predicate.ToString().Contains("max")).First();
             return maxAlarmTriple;
@@ -191,7 +183,7 @@ namespace ic_project_2
             return @"
                 PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX :        <http://thomas.spb.ru/#>
+                PREFIX : <http://KingOlli.de#>
 
                 SELECT ?state
                 WHERE {
@@ -214,7 +206,7 @@ namespace ic_project_2
             return @"
                 PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX :        <http://thomas.spb.ru/#>
+                PREFIX :        <http://KingOlli.de#>
 
                 SELECT  ?state ?Pair
                 WHERE {
@@ -236,75 +228,122 @@ namespace ic_project_2
         {
             // Pair1_Alarm
             // Pair1_Int1_Alarm
+            string ParAname = "Par" + ParA;
+            string ParBname = "Par" + ParB;
+            string ParCname = "Par" + ParC;
 
             return @"
                 PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX :        <http://thomas.spb.ru/#>
+                PREFIX :        <http://KingOlli.de#>
 
-                SELECT  ?state ?triple
+                SELECT  ?state ?Pair
                 WHERE {
-                    ?state :Triple ?triple.
-                    ?triple :Par" + ParA + @" ?intA.
+                    ?state :Pair ?Pair.
+                    ?Pair :" + ParAname + @" ?intA.
                     ?intA :min ?minA.
                         FILTER(?minA < " + valueA.ToString() + @").
                     ?intA :max ?maxA.
                         FILTER(?maxA > " + valueA.ToString() + @").
-
-                    ?triple :Par" + ParB + @" ?intB.
+                    ?Pair :" + ParBname + @" ?intB.
                     ?intB :min ?minB.
                         FILTER(?minB < " + valueB.ToString() + @").
                     ?intB :max ?maxB.
                         FILTER(?maxB > " + valueB.ToString() + @").
-
-                    ?triple :Par" + ParC + @" ?intC.
+                    ?Pair :" + ParCname + @" ?intC.
                     ?intC :min ?minC.
-                        FILTER(?minC < " + valueB.ToString() + @").
+                        FILTER(?minC < " + valueC.ToString() + @").
                     ?intC :max ?maxC.
-                        FILTER(?maxC > " + valueB.ToString() + @").
+                        FILTER(?maxC > " + valueC.ToString() + @").
                 }";
         }
 
-        public void AskParametersSimultaneausly(SensorSetValues parameters)
+        public string CreateSparqlQueryQuad(int ParA, int valueA, int ParB, int valueB, int ParC, int valueC, int ParD, int valueD)
         {
-            // string sparqlQuery = CreateSparqlQueryPair_V2(ParA, valueA, ParB, valueB);
-            // get if there are intervalls for the values in two parameters
+            // Pair1_Alarm
+            // Pair1_Int1_Alarm
+            string ParAname = "Par" + ParA;
+            string ParBname = "Par" + ParB;
+            string ParCname = "Par" + ParC;
+            string ParDname = "Par" + ParD;
+ 
+            return @"
+                PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
+                PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX :        <http://KingOlli.de#>
 
-
-            //  string sparqlQuery = CreateSparqlQueryTriple(ParA, valueA, ParB, valueB, parc, valc);
-
-            //var q = queryParser.ParseFromString(sparqlQuery);
-            //SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
-            //var tt = resultSet.Count;
-            //var triplesCount = graph.Triples.Count;
-            //foreach (var smth in resultSet)
-            //{
-            //    OnNewLogMessage((smth as SparqlResult).ToString());
-            //}
+                SELECT  ?state ?Pair
+                WHERE {
+                    ?state :Pair ?Pair.
+                    ?Pair :" + ParAname + @" ?intA.
+                    ?intA :min ?minA.
+                        FILTER(?minA < " + valueA.ToString() + @").
+                    ?intA :max ?maxA.
+                        FILTER(?maxA > " + valueA.ToString() + @").
+                    ?Pair :" + ParBname + @" ?intB.
+                    ?intB :min ?minB.
+                        FILTER(?minB < " + valueB.ToString() + @").
+                    ?intB :max ?maxB.
+                        FILTER(?maxB > " + valueB.ToString() + @").
+                    ?Pair :" + ParCname + @" ?intC.
+                    ?intC :min ?minC.
+                        FILTER(?minC < " + valueC.ToString() + @").
+                    ?intC :max ?maxC.
+                        FILTER(?maxC > " + valueC.ToString() + @").
+                    ?Pair :" + ParDname + @" ?intD.
+                    ?intD :min ?minD.
+                        FILTER(?minD < " + valueD.ToString() + @").
+                    ?intD :max ?maxD.
+                        FILTER(?maxD > " + valueD.ToString() + @").
+                }";
         }
-        public State AskPairs(SensorSetValues parameters)
+
+        public string CreateSparqlQueryFifth(int ParA, int valueA, int ParB, int valueB, int ParC, int valueC, int ParD, int valueD, int ParE, int valueE)
         {
-            AskOnePair(1, parameters.SensorValue[0], 2, parameters.SensorValue[1]);
+            // Pair1_Alarm
+            // Pair1_Int1_Alarm
+            string ParAname = "Par" + ParA;
+            string ParBname = "Par" + ParB;
+            string ParCname = "Par" + ParC;
+            string ParDname = "Par" + ParD;
+            string ParEname = "Par" + ParE;
 
-            AskOnePair(2, parameters.SensorValue[1], 3, parameters.SensorValue[2]);
-            AskOnePair(2, parameters.SensorValue[1], 4, parameters.SensorValue[3]);
-            AskOnePair(4, parameters.SensorValue[3], 5, parameters.SensorValue[4]);
-            return null;
+            return @"
+                PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
+                PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+                PREFIX :        <http://KingOlli.de#>
+
+                SELECT  ?state ?Pair
+                WHERE {
+                    ?state :Pair ?Pair.
+                    ?Pair :" + ParAname + @" ?intA.
+                    ?intA :min ?minA.
+                        FILTER(?minA < " + valueA.ToString() + @").
+                    ?intA :max ?maxA.
+                        FILTER(?maxA > " + valueA.ToString() + @").
+                    ?Pair :" + ParBname + @" ?intB.
+                    ?intB :min ?minB.
+                        FILTER(?minB < " + valueB.ToString() + @").
+                    ?intB :max ?maxB.
+                        FILTER(?maxB > " + valueB.ToString() + @").
+                    ?Pair :" + ParCname + @" ?intC.
+                    ?intC :min ?minC.
+                        FILTER(?minC < " + valueC.ToString() + @").
+                    ?intC :max ?maxC.
+                        FILTER(?maxC > " + valueC.ToString() + @").
+                    ?Pair :" + ParDname + @" ?intD.
+                    ?intD :min ?minD.
+                        FILTER(?minD < " + valueD.ToString() + @").
+                    ?intD :max ?maxD.
+                        FILTER(?maxD > " + valueD.ToString() + @").
+                    ?Pair :" + ParEname + @" ?intE.
+                    ?intE :min ?minE.
+                        FILTER(?minE < " + valueE.ToString() + @").
+                    ?intE :max ?maxE.
+                        FILTER(?maxE > " + valueE.ToString() + @").
+                }";
         }
 
-        public State AskOnePair(int parA, int valA, int parB, int valB)
-        {
-            string sparqlQuery = CreateSparqlQueryPair(parA, valA, parB, valB);
-
-            var q = queryParser.ParseFromString(sparqlQuery);
-            SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
-            var tt = resultSet.Count;
-            var triplesCount = graph.Triples.Count;
-            foreach (var smth in resultSet)
-            {
-                OnNewLogMessage((smth as SparqlResult).ToString());
-            }
-        }
 
         public State AskOneParameter(int parameter, int value)
         {
@@ -325,12 +364,187 @@ namespace ic_project_2
                 {
                     SparqlResult result = resultSet[0];
                     var resultString = result["state"].ToString();
-                    OnNewLogMessage(result.ToString());
+                    OnNewLogMessage(result.ToString().Substring(25));
                     return ParseResultStringToState(resultString);
                 }
-                else if (resultSet.Count == 2)
+                else if (resultSet.Count == 0)
+                {
+                    return State.Good();
+                }
+            }
+            return State.Undefined();
+        }
+
+        public State AskPair(SensorSetValues parameters) {
+            State [] stateArrayPair = new State [4];
+
+            stateArrayPair[0] = AskPairParameter(1, parameters.SensorValue[0], 3, parameters.SensorValue[2]);
+            stateArrayPair[1] = AskPairParameter(2, parameters.SensorValue[1], 5, parameters.SensorValue[4]);
+            stateArrayPair[2] = AskPairParameter(4, parameters.SensorValue[3], 5, parameters.SensorValue[4]);
+            stateArrayPair[3] = AskPairParameter(2, parameters.SensorValue[1], 3, parameters.SensorValue[2]);
+
+            if (stateArrayPair.Any(x => x.Status == State.InternalStatus.Alarm))
+            {
+                return State.Alarm();
+            }
+            else if (stateArrayPair.Any(x => x.Status == State.InternalStatus.Warning))
+            {
+                return State.Warning();
+            }
+            else
+            {
+                return State.Good();
+            }
+        }
+
+        public State AskTriple(SensorSetValues parameters)
+        {
+            State[] stateArrayTriple = new State[3];
+
+            stateArrayTriple[0] = AskTripleParameter(1, parameters.SensorValue[0], 3, parameters.SensorValue[2], 4, parameters.SensorValue[3]);
+            stateArrayTriple[1] = AskTripleParameter(1, parameters.SensorValue[0], 3, parameters.SensorValue[2], 5, parameters.SensorValue[4]);
+            stateArrayTriple[2] = AskTripleParameter(1, parameters.SensorValue[0], 4, parameters.SensorValue[3], 5, parameters.SensorValue[4]);
+
+            if (stateArrayTriple.Any(x => x.Status == State.InternalStatus.Alarm))
+            {
+                return State.Alarm();
+            }
+            else if (stateArrayTriple.Any(x => x.Status == State.InternalStatus.Warning)) {
+                return State.Warning();
+            }
+            else
+            { 
+                return State.Good();
+            }
+        }
+
+        public State AskQuad(SensorSetValues parameters)
+        {
+            State[] stateArrayQuad = new State[2];
+
+            stateArrayQuad[0] = AskQuadParameter(1, parameters.SensorValue[0], 2, parameters.SensorValue[1], 4, parameters.SensorValue[3], 5, parameters.SensorValue[4]);
+            stateArrayQuad[1] = AskQuadParameter(2, parameters.SensorValue[1], 3, parameters.SensorValue[2], 3, parameters.SensorValue[2],5, parameters.SensorValue[4]);
+
+            if (stateArrayQuad.Any(x => x.Status == State.InternalStatus.Alarm))
+            {
+                return State.Alarm();
+            }
+            else if (stateArrayQuad.Any(x => x.Status == State.InternalStatus.Warning)) 
+                {
+                return State.Warning();
+                }
+            else
+            {
+                return State.Good();
+            }
+        }
+
+        public State AskFifth(SensorSetValues parameters)
+        {
+
+            return AskFifthParameter(1, parameters.SensorValue[0], 2, parameters.SensorValue[1], 3, parameters.SensorValue[2], 4, parameters.SensorValue[3], 5, parameters.SensorValue[4]);
+           
+        }
+
+        public State AskPairParameter(int parameterA, int valueA, int parameterB, int valueB)
+        {
+            string sparqlQuery = CreateSparqlQueryPair(parameterA, valueA, parameterB, valueB);
+            var q = queryParser.ParseFromString(sparqlQuery);
+            SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
+
+            if (resultSet != null)
+            {
+                if (resultSet.Count > 1)
                 {
                     return State.Alarm();
+                }
+                else if (resultSet.Count == 1)
+                {
+                    SparqlResult result = resultSet[0];
+                    var resultString = result["state"].ToString();
+                    OnNewLogMessage(result.ToString().Substring(25));
+                    return ParseResultStringToState(resultString);
+                }
+                else if (resultSet.Count == 0)
+                {
+                    return State.Good();
+                }
+            }
+            return State.Undefined();
+        }
+
+        public State AskTripleParameter(int parameterA, int valueA, int parameterB, int valueB, int parameterC, int valueC)
+        {
+            string sparqlQuery = CreateSparqlQueryTriple(parameterA, valueA, parameterB, valueB, parameterC, valueC);
+            var q = queryParser.ParseFromString(sparqlQuery);
+            SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
+
+            if (resultSet != null)
+            {
+                if (resultSet.Count > 1)
+                {
+                    return State.Alarm();
+                }
+                else if (resultSet.Count == 1)
+                {
+                    SparqlResult result = resultSet[0];
+                    var resultString = result["state"].ToString();
+                    OnNewLogMessage(result.ToString().Substring(25));
+                    return ParseResultStringToState(resultString);
+                }
+                else if (resultSet.Count == 0)
+                {
+                    return State.Good();
+                }
+            }
+            return State.Undefined();
+        }
+
+        public State AskQuadParameter(int parameterA, int valueA, int parameterB, int valueB, int parameterC, int valueC, int parameterD, int valueD)
+        {
+            string sparqlQuery = CreateSparqlQueryQuad(parameterA, valueA, parameterB, valueB, parameterC, valueC, parameterD, valueD);
+            var q = queryParser.ParseFromString(sparqlQuery);
+            SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
+
+            if (resultSet != null)
+            {
+                if (resultSet.Count > 1)
+                {
+                    return State.Alarm();
+                }
+                else if (resultSet.Count == 1)
+                {
+                    SparqlResult result = resultSet[0];
+                    var resultString = result["state"].ToString();
+                    OnNewLogMessage(result.ToString().Substring(25));
+                    return ParseResultStringToState(resultString);
+                }
+                else if (resultSet.Count == 0)
+                {
+                    return State.Good();
+                }
+            }
+            return State.Undefined();
+        }
+
+        public State AskFifthParameter(int parameterA, int valueA, int parameterB, int valueB, int parameterC, int valueC, int parameterD, int valueD, int parameterE, int valueE)
+        {
+            string sparqlQuery = CreateSparqlQueryFifth(parameterA, valueA, parameterB, valueB, parameterC, valueC, parameterD, valueD, parameterE, valueE);
+            var q = queryParser.ParseFromString(sparqlQuery);
+            SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
+
+            if (resultSet != null)
+            {
+                if (resultSet.Count > 1)
+                {
+                    return State.Alarm();
+                }
+                else if (resultSet.Count == 1)
+                {
+                    SparqlResult result = resultSet[0];
+                    var resultString = result["state"].ToString();
+                    OnNewLogMessage(result.ToString().Substring(25));
+                    return ParseResultStringToState(resultString);
                 }
                 else if (resultSet.Count == 0)
                 {
