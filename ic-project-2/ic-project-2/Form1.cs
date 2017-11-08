@@ -45,12 +45,22 @@ namespace ic_project_2
             parameters.ParseSensorValuesString(inParameterString);
             SetSensorValuesInTextboxes(parameters);
             QueryEachParameterSeperatly(parameters);
+            QuerySimul(parameters);
             SetNewAlarmValueParameter1();
             SetStatusIndicators();
             SetSetIndicators();
             SendResponseToArduino();
         }
 
+        private void QuerySimul(SensorSetValues parameters)
+        {
+            var statePair = kb.AskPair(parameters);
+            setPairStatusButton(statePair);
+            var stateTriple = kb.AskTriple(parameters);
+            setTripleStatusButton(stateTriple);
+            setQuadStatusButton(kb.AskQuad(parameters));
+            setFifthStatusButton(kb.AskFifth(parameters));
+        }
 
         private void SetNewAlarmValueParameter1()
         {
@@ -209,6 +219,113 @@ namespace ic_project_2
             {
                 listBox1.Items.Add(logMessage);
                 listBox1.TopIndex = listBox1.Items.Count - 1; // scroll to bottom
+            }
+        }
+
+
+        private void setPairStatusButton(State state)
+        {
+            Color newColor;
+            if (state.Status == State.InternalStatus.Alarm)
+            {
+                newColor = Color.Red;
+            }
+            else if (state.Status == State.InternalStatus.Warning)
+                newColor = Color.Yellow;
+            else
+                newColor = Color.LightGreen;
+
+            Button button = buttonStatusPair;
+            if (button.InvokeRequired)
+            {
+                Action act = () =>
+                {
+                    button.BackColor = newColor;
+                };
+                button.Invoke(act);
+            }
+            else
+            {
+                button.BackColor = newColor;
+            }
+        }
+
+        private void setTripleStatusButton(State state)
+        {
+            Color newColor;
+            if (state.Status == State.InternalStatus.Alarm)
+            {
+                newColor = Color.Red;
+            }
+            else if (state.Status == State.InternalStatus.Warning)
+                newColor = Color.Yellow;
+            else
+                newColor = Color.LightGreen;
+
+            Button button = buttonStatusTriple;
+            if (button.InvokeRequired)
+            {
+                Action act = () =>
+                {
+                    button.BackColor = newColor;
+                };
+                button.Invoke(act);
+            }
+            else
+            {
+                button.BackColor = newColor;
+            }
+        }
+        private void setQuadStatusButton(State state)
+        {
+            Color newColor;
+            if (state.Status == State.InternalStatus.Alarm)
+            {
+                newColor = Color.Red;
+            }
+            else if (state.Status == State.InternalStatus.Warning)
+                newColor = Color.Yellow;
+            else
+                newColor = Color.LightGreen;
+
+            Button button = buttonStatusQuad;
+            if (button.InvokeRequired)
+            {
+                Action act = () =>
+                {
+                    button.BackColor = newColor;
+                };
+                button.Invoke(act);
+            }
+            else
+            {
+                button.BackColor = newColor;
+            }
+        }
+        private void setFifthStatusButton(State state)
+        {
+            Color newColor;
+            if (state.Status == State.InternalStatus.Alarm)
+            {
+                newColor = Color.Red;
+            }
+            else if (state.Status == State.InternalStatus.Warning)
+                newColor = Color.Yellow;
+            else
+                newColor = Color.LightGreen;
+
+            Button button = buttonStatusFifth;
+            if (button.InvokeRequired)
+            {
+                Action act = () =>
+                {
+                    button.BackColor = newColor;
+                };
+                button.Invoke(act);
+            }
+            else
+            {
+                button.BackColor = newColor;
             }
         }
     }

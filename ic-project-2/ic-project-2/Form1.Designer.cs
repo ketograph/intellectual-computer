@@ -178,7 +178,6 @@ namespace ic_project_2
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(844, 485);
             this.listBox1.TabIndex = 15;
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // SetButton1
             // 
@@ -234,7 +233,6 @@ namespace ic_project_2
             this.buttonStatusPair.TabIndex = 21;
             this.buttonStatusPair.Text = "Pair";
             this.buttonStatusPair.UseVisualStyleBackColor = true;
-            this.buttonStatusPair.Click += new System.EventHandler(this.button1_Click);
             // 
             // buttonStatusTriple
             // 
@@ -255,7 +253,6 @@ namespace ic_project_2
             this.buttonStatusQuad.TabIndex = 23;
             this.buttonStatusQuad.Text = "Quad";
             this.buttonStatusQuad.UseVisualStyleBackColor = true;
-            this.buttonStatusQuad.Click += new System.EventHandler(this.buttonStatusQuad_Click);
             // 
             // buttonStatusFifth
             // 

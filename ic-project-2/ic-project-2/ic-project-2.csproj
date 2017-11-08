@@ -81,8 +81,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="..\..\KB_Data_ThomasRossberg.n3">
-      <Link>KB_Data_ThomasRossberg.n3</Link>
+    <None Include="..\..\KB_Data.n3">
+      <Link>KB_Data.n3</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
