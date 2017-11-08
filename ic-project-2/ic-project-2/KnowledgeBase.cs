@@ -21,7 +21,7 @@ namespace ic_project_2
         Notation3Parser parser;
         SparqlQueryParser queryParser;
         Graph graph;
-        string knowledgeBaseFile = "KB_Data.n3";
+        string knowledgeBaseFile = "KB_Data.txt";
 
 
         public event EventHandler<LogMessageEventArgs> LogMessageAdded;
@@ -358,7 +358,7 @@ namespace ic_project_2
                 {
                     SparqlResult result = resultSet[0];
                     var resultString = result["state"].ToString();
-                    OnNewLogMessage(result.ToString().Substring(25));
+                    OnNewLogMessage(result.ToString().Substring(29));
                     return ParseResultStringToState(resultString);
                 }
                 else if (resultSet.Count == 0)
@@ -456,7 +456,7 @@ namespace ic_project_2
                 {
                     SparqlResult result = resultSet[0];
                     var resultString = result["state"].ToString();
-                    OnNewLogMessage(result.ToString().Substring(25));
+                    OnNewLogMessage(result.ToString().Substring(29));
                     return ParseResultStringToState(resultString);
                 }
                 else if (resultSet.Count == 0)
@@ -483,7 +483,7 @@ namespace ic_project_2
                 {
                     SparqlResult result = resultSet[0];
                     var resultString = result["state"].ToString();
-                    OnNewLogMessage(result.ToString().Substring(25));
+                    OnNewLogMessage(result.ToString().Substring(29));
                     return ParseResultStringToState(resultString);
                 }
                 else if (resultSet.Count == 0)
@@ -510,7 +510,7 @@ namespace ic_project_2
                 {
                     SparqlResult result = resultSet[0];
                     var resultString = result["state"].ToString();
-                    OnNewLogMessage(result.ToString().Substring(25));
+                    OnNewLogMessage(result.ToString().Substring(29));
                     return ParseResultStringToState(resultString);
                 }
                 else if (resultSet.Count == 0)
@@ -537,7 +537,7 @@ namespace ic_project_2
                 {
                     SparqlResult result = resultSet[0];
                     var resultString = result["state"].ToString();
-                    OnNewLogMessage(result.ToString().Substring(25));
+                    OnNewLogMessage(result.ToString().Substring(29));
                     return ParseResultStringToState(resultString);
                 }
                 else if (resultSet.Count == 0)

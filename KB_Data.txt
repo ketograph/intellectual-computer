@@ -1,0 +1,391 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix : <http://thomas.spb.ru/#>. 
+
+:State rdf:type rdf:Class.
+:Alarm rdf:type :State.
+
+:Alarm :par1 :Int1_Alarm.
+:Int1_Alarm rdf:type :Interval.
+:Int1_Alarm 	:min 300;
+	    :max 1023.
+
+:Alarm :par2 :Int2_Alarm.
+:Int2_Alarm rdf:type :Interval.
+:Int2_Alarm 	:min 800;
+	    :max 1023.
+
+:Alarm :par3 :Int3_Alarm.
+:Int3_Alarm rdf:type :Interval.
+:Int3_Alarm 	:min 250;
+	    :max 1023.
+
+:Alarm :par4 :Int4_Alarm.
+:Int4_Alarm rdf:type :Interval.
+:Int4_Alarm 	:min 400;
+	    :max 1023.
+
+:Alarm :par5 :Int5_Alarm.
+:Int5_Alarm rdf:type :Interval.
+:Int5_Alarm 	:min 500;
+	    :max 1023.
+
+
+:Warning rdf:type :State.
+:Warning :par1 :Int1_Warning.
+:Int1_Warning rdf:type :Interval.
+:Int1_Warning 	:min 200;
+	    :max 299.
+
+:Warning :par2 :Int2_Warning.
+:Int2_Warning rdf:type :Interval.
+:Int2_Warning 	:min 600;
+	    :max 799.
+
+:Warning :par3 :Int3_Warning.
+:Int3_Warning rdf:type :Interval.
+:Int3_Warning 	:min 100;
+	    :max 249.
+
+:Warning :par4 :Int4_Warning.
+:Int4_Warning rdf:type :Interval.
+:Int4_Warning 	:min 300;
+	    :max 399.
+
+:Warning :par5 :Int5_Warning.
+:Int5_Warning rdf:type :Interval.
+:Int5_Warning 	:min 350;
+	    :max 499.
+
+##
+## Pairs
+## PairX Parameter Y Intervall _ Warning/Alarm
+##
+:Warning		:Pair	:Pair1_Warning.
+:Pair1_Warning		:Par1	:Pair1_Int1_Warning.
+:Pair1_Int1_Warning	rdf:type	:Interval.
+:Pair1_Int1_Warning	:min	150;
+			:max	1023.
+:Pair1_Warning		:Par3	:Pair1_Int2_Warning.
+:Pair1_Int2_Warning	rdf:type	:Interval.
+:Pair1_Int2_Warning	:min	100;
+			:max	1023.
+
+
+:Warning			:Pair	:Pair2_Warning.
+:Pair2_Warning		:Par2	:Pair2_Int1_Warning.
+:Pair2_Int1_Warning	rdf:type	:Interval.
+:Pair2_Int1_Warning	:min	500;
+					:max	1023.
+:Pair2_Warning		:Par5	:Pair2_Int2_Warning.
+:Pair2_Int2_Warning	rdf:type	:Interval.
+:Pair2_Int2_Warning	:min	200;
+					:max	1023.
+
+:Warning			:Pair	:Pair3_Warning.
+:Pair3_Warning		:Par4	:Pair3_Int1_Warning.
+:Pair3_Int1_Warning	rdf:type	:Interval.
+:Pair3_Int1_Warning	:min	200;
+					:max	1023.
+:Pair3_Warning		:Par5	:Pair3_Int2_Warning.
+:Pair3_Int2_Warning	rdf:type	:Interval.
+:Pair3_Int2_Warning	:min	250;
+					:max	1023.
+
+:Warning			:Pair	:Pair4_Warning.
+:Pair4_Warning		:Par2	:Pair4_Int1_Warning.
+:Pair4_Int1_Warning	rdf:type	:Interval.
+:Pair4_Int1_Warning	:min	400;
+					:max	1023.
+:Pair4_Warning		:Par3	:Pair4_Int2_Warning.
+:Pair4_Int2_Warning	rdf:type	:Interval.
+:Pair4_Int2_Warning	:min	100;
+					:max	1023.
+
+
+##
+## Triples
+## 
+:Warning			:Triple		:Triple1_Warning.
+:Triple1_Warning	:Par1		:Triple1_Int1_Warning.
+:Triple1_Int1_Warning	rdf:type	:Interval.
+:Triple1_Int1_Warning	:min	150;
+			:max	1023.
+
+
+:Triple1_Warning	:Par3		:Triple1_Int2_Warning.
+:Triple1_Int2_Warning	rdf:type	:Interval.
+:Triple1_Int2_Warning	:min	150;
+			:max	1023.
+
+
+:Triple1_Warning	:Par4		:Triple1_Int3_Warning.
+:Triple1_Int3_Warning	rdf:type	:Interval.
+:Triple1_Int3_Warning	:min	300;
+			:max	1023.
+
+			
+:Warning			:Triple		:Triple2_Warning.
+:Triple2_Warning	:Par1		:Triple2_Int1_Warning.
+:Triple2_Int1_Warning	rdf:type	:Interval.
+:Triple2_Int1_Warning	:min	100;
+			:max	1023.
+:Triple2_Warning	:Par3		:Triple2_Int2_Warning.
+:Triple2_Int2_Warning	rdf:type	:Interval.
+:Triple2_Int2_Warning	:min	100;
+			:max	1023.
+:Triple2_Warning	:Par5		:Triple2_Int3_Warning.
+:Triple2_Int3_Warning	rdf:type	:Interval.
+:Triple2_Int3_Warning	:min	500;
+			:max	1023.
+
+
+:Warning			:Triple		:Triple3_Warning.
+:Triple3_Warning	:Par1		:Triple3_Int1_Warning.
+:Triple3_Int1_Warning	rdf:type	:Interval.
+:Triple3_Int1_Warning	:min	100;
+			:max	1023.
+:Triple3_Warning	:Par4		:Triple3_Int2_Warning.
+:Triple3_Int2_Warning	rdf:type	:Interval.
+:Triple3_Int2_Warning	:min	300;
+			:max	1023.
+:Triple3_Warning	:Par5		:Triple3_Int3_Warning.
+:Triple3_Int3_Warning	rdf:type	:Interval.
+:Triple3_Int3_Warning	:min	450;
+			:max	1023.
+
+
+## 
+## Quads 
+##
+## Quad1
+:Warning			:Quad		:Quad1_Warning.
+:Quad1_Warning	:Par1		:Quad1_Int1_Warning.
+:Quad1_Int1_Warning	rdf:type	:Interval.
+:Quad1_Int1_Warning	:min	100;
+				:max	1023.
+:Quad1_Warning	:Par2		:Quad1_Int2_Warning.
+:Quad1_Int2_Warning	rdf:type	:Interval.
+:Quad1_Int2_Warning	:min	700;
+			:max	1023.
+:Quad1_Warning	:Par4		:Quad1_Int3_Warning.
+:Quad1_Int3_Warning	rdf:type	:Interval.
+:Quad1_Int3_Warning	:min	200;
+			:max	1023.
+:Quad1_Warning	:Par5		:Quad1_Int4_Warning.
+:Quad1_Int4_Warning	rdf:type	:Interval.
+:Quad1_Int4_Warning	:min	350;
+			:max	1023.
+
+## Quad2
+:Warning			:Quad		:Quad2_Warning.
+:Quad2_Warning	:Par2		:Quad2_Int1_Warning.
+:Quad2_Int1_Warning	rdf:type	:Interval.
+:Quad2_Int1_Warning	:min	600;
+				:max	1023.
+:Quad2_Warning	:Par3		:Quad2_Int2_Warning.
+:Quad2_Int2_Warning	rdf:type	:Interval.
+:Quad2_Int2_Warning	:min	150;
+			:max	1023.
+:Quad2_Warning	:Par4		:Quad2_Int3_Warning.
+:Quad2_Int3_Warning	rdf:type	:Interval.
+:Quad2_Int3_Warning	:min	200;
+			:max	1023.
+:Quad2_Warning	:Par5		:Quad2_Int4_Warning.
+:Quad2_Int4_Warning	rdf:type	:Interval.
+:Quad2_Int4_Warning	:min	350;
+			:max	1023.
+
+## 
+## Fifth
+## 
+:Warning			:Fifth		:Fifth1_Warning.
+:Fifth1_Warning	:Par1		:Fifth1_Int1_Warning.
+:Fifth1_Int1_Warning	rdf:type	:Interval.
+:Fifth1_Int1_Warning	:min	100;
+				:max	1023.
+
+:Fifth1_Warning	:Par2		:Fifth1_Int2_Warning.
+:Fifth1_Int2_Warning	rdf:type	:Interval.
+:Fifth1_Int2_Warning	:min	500;
+				:max	1023.
+:Fifth1_Warning	:Par3		:Fifth1_Int3_Warning.
+:Fifth1_Int3_Warning	rdf:type	:Interval.
+:Fifth1_Int3_Warning	:min	50;
+			:max	1023.
+:Fifth1_Warning	:Par4		:Fifth1_Int4_Warning.
+:Fifth1_Int4_Warning	rdf:type	:Interval.
+:Fifth1_Int4_Warning	:min	100;
+			:max	1023.
+:Fifth1_Warning	:Par5		:Fifth1_Int5_Warning.
+:Fifth1_Int5_Warning	rdf:type	:Interval.
+:Fifth1_Int5_Warning	:min	500;
+			:max	1023.
+
+
+##
+## Pairs
+## PairX Parameter Y Intervall _ Alarm/Alarm
+##
+:Alarm		:Pair	:Pair1_Alarm.
+:Pair1_Alarm		:Par1	:Pair1_Int1_Alarm.
+:Pair1_Int1_Alarm	rdf:type	:Interval.
+:Pair1_Int1_Alarm	:min	250;
+			:max	1023.
+:Pair1_Alarm		:Par3	:Pair1_Int2_Alarm.
+:Pair1_Int2_Alarm	rdf:type	:Interval.
+:Pair1_Int2_Alarm	:min	200;
+			:max	1023.
+
+
+:Alarm			:Pair	:Pair2_Alarm.
+:Pair2_Alarm		:Par2	:Pair2_Int1_Alarm.
+:Pair2_Int1_Alarm	rdf:type	:Interval.
+:Pair2_Int1_Alarm	:min	700;
+					:max	1023.
+:Pair2_Alarm		:Par5	:Pair2_Int2_Alarm.
+:Pair2_Int2_Alarm	rdf:type	:Interval.
+:Pair2_Int2_Alarm	:min	400;
+					:max	1023.
+
+:Alarm			:Pair	:Pair3_Alarm.
+:Pair3_Alarm		:Par4	:Pair3_Int1_Alarm.
+:Pair3_Int1_Alarm	rdf:type	:Interval.
+:Pair3_Int1_Alarm	:min	350;
+					:max	1023.
+:Pair3_Alarm		:Par5	:Pair3_Int2_Alarm.
+:Pair3_Int2_Alarm	rdf:type	:Interval.
+:Pair3_Int2_Alarm	:min	450;
+					:max	1023.
+
+:Alarm			:Pair	:Pair4_Alarm.
+:Pair4_Alarm		:Par2	:Pair4_Int1_Alarm.
+:Pair4_Int1_Alarm	rdf:type	:Interval.
+:Pair4_Int1_Alarm	:min	600;
+					:max	1023.
+:Pair4_Alarm		:Par3	:Pair4_Int2_Alarm.
+:Pair4_Int2_Alarm	rdf:type	:Interval.
+:Pair4_Int2_Alarm	:min	200;
+					:max	1023.
+
+
+##
+## Triples
+## 
+:Alarm			:Triple		:Triple1_Alarm.
+:Triple1_Alarm	:Par1		:Triple1_Int1_Alarm.
+:Triple1_Int1_Alarm	rdf:type	:Interval.
+:Triple1_Int1_Alarm	:min	150;
+			:max	1023.
+
+
+:Triple1_Alarm	:Par3		:Triple1_Int2_Alarm.
+:Triple1_Int2_Alarm	rdf:type	:Interval.
+:Triple1_Int2_Alarm	:min	150;
+			:max	1023.
+
+
+:Triple1_Alarm	:Par4		:Triple1_Int3_Alarm.
+:Triple1_Int3_Alarm	rdf:type	:Interval.
+:Triple1_Int3_Alarm	:min	200;
+			:max	1023.
+
+			
+:Alarm			:Triple		:Triple2_Alarm.
+:Triple2_Alarm	:Par1		:Triple2_Int1_Alarm.
+:Triple2_Int1_Alarm	rdf:type	:Interval.
+:Triple2_Int1_Alarm	:min	300;
+			:max	1023.
+:Triple2_Alarm	:Par3		:Triple2_Int2_Alarm.
+:Triple2_Int2_Alarm	rdf:type	:Interval.
+:Triple2_Int2_Alarm	:min	150;
+			:max	1023.
+:Triple2_Alarm	:Par5		:Triple2_Int3_Alarm.
+:Triple2_Int3_Alarm	rdf:type	:Interval.
+:Triple2_Int3_Alarm	:min	450;
+			:max	1023.
+
+
+:Alarm			:Triple		:Triple3_Alarm.
+:Triple3_Alarm	:Par1		:Triple3_Int1_Alarm.
+:Triple3_Int1_Alarm	rdf:type	:Interval.
+:Triple3_Int1_Alarm	:min	250;
+			:max	1023.
+:Triple3_Alarm	:Par4		:Triple3_Int2_Alarm.
+:Triple3_Int2_Alarm	rdf:type	:Interval.
+:Triple3_Int2_Alarm	:min	400;
+			:max	1023.
+:Triple3_Alarm	:Par5		:Triple3_Int3_Alarm.
+:Triple3_Int3_Alarm	rdf:type	:Interval.
+:Triple3_Int3_Alarm	:min	400;
+			:max	1023.
+
+
+## 
+## Quads 
+##
+## Quad1
+:Alarm			:Quad		:Quad1_Alarm.
+:Quad1_Alarm	:Par1		:Quad1_Int1_Alarm.
+:Quad1_Int1_Alarm	rdf:type	:Interval.
+:Quad1_Int1_Alarm	:min	250;
+				:max	1023.
+:Quad1_Alarm	:Par2		:Quad1_Int2_Alarm.
+:Quad1_Int2_Alarm	rdf:type	:Interval.
+:Quad1_Int2_Alarm	:min	800;
+			:max	1023.
+:Quad1_Alarm	:Par4		:Quad1_Int3_Alarm.
+:Quad1_Int3_Alarm	rdf:type	:Interval.
+:Quad1_Int3_Alarm	:min	300;
+			:max	1023.
+:Quad1_Alarm	:Par5		:Quad1_Int4_Alarm.
+:Quad1_Int4_Alarm	rdf:type	:Interval.
+:Quad1_Int4_Alarm	:min	300;
+			:max	1023.
+
+## Quad2
+:Alarm			:Quad		:Quad2_Alarm.
+:Quad2_Alarm	:Par2		:Quad2_Int1_Alarm.
+:Quad2_Int1_Alarm	rdf:type	:Interval.
+:Quad2_Int1_Alarm	:min	700;
+				:max	1023.
+:Quad2_Alarm	:Par3		:Quad2_Int2_Alarm.
+:Quad2_Int2_Alarm	rdf:type	:Interval.
+:Quad2_Int2_Alarm	:min	200;
+			:max	1023.
+:Quad2_Alarm	:Par4		:Quad2_Int3_Alarm.
+:Quad2_Int3_Alarm	rdf:type	:Interval.
+:Quad2_Int3_Alarm	:min	300;
+			:max	1023.
+:Quad2_Alarm	:Par5		:Quad2_Int4_Alarm.
+:Quad2_Int4_Alarm	rdf:type	:Interval.
+:Quad2_Int4_Alarm	:min	300;
+			:max	1023.
+
+## 
+## Fifth
+## 
+:Alarm			:Fifth		:Fifth1_Alarm.
+:Fifth1_Alarm	:Par1		:Fifth1_Int1_Alarm.
+:Fifth1_Int1_Alarm	rdf:type	:Interval.
+:Fifth1_Int1_Alarm	:min	100;
+				:max	1023.
+
+:Fifth1_Alarm	:Par2		:Fifth1_Int2_Alarm.
+:Fifth1_Int2_Alarm	rdf:type	:Interval.
+:Fifth1_Int2_Alarm	:min	500;
+				:max	1023.
+:Fifth1_Alarm	:Par3		:Fifth1_Int3_Alarm.
+:Fifth1_Int3_Alarm	rdf:type	:Interval.
+:Fifth1_Int3_Alarm	:min	50;
+			:max	1023.
+:Fifth1_Alarm	:Par4		:Fifth1_Int4_Alarm.
+:Fifth1_Int4_Alarm	rdf:type	:Interval.
+:Fifth1_Int4_Alarm	:min	100;
+			:max	1023.
+:Fifth1_Alarm	:Par5		:Fifth1_Int5_Alarm.
+:Fifth1_Int5_Alarm	rdf:type	:Interval.
+:Fifth1_Int5_Alarm	:min	500;
+			:max	1023.
+
+
+
