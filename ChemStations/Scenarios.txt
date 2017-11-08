@@ -1,0 +1,15 @@
+* SC0 (everything ok)
+ Filtering
+ - V101 open
+ - 1M7 is on 
+ - 1B2 is off (Sensor hoher Füllstand)
+ - 1B3 is on 
+ - B101 is off (Überlaufsensor)
+ - 1M2 working 
+ - V110 closed
+ - 1M2 on
+ - V104 ist ein Rückschlagventil
+ - 1M4 is open
+ - 1M1
+ - 1B1 is showing something
+

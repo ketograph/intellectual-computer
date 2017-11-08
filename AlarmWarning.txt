@@ -1,4 +1,0 @@
-:State 		rdf:type 	owl:class
-
-:Alarm 		rdf:type 	:State
-:Warning 	rdf:type 	:State
