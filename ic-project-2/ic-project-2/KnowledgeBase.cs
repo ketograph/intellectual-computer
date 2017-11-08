@@ -226,8 +226,6 @@ namespace ic_project_2
 
         public string CreateSparqlQueryTriple(int ParA, int valueA, int ParB, int valueB, int ParC, int valueC)
         {
-            // Pair1_Alarm
-            // Pair1_Int1_Alarm
             string ParAname = "Par" + ParA;
             string ParBname = "Par" + ParB;
             string ParCname = "Par" + ParC;
@@ -239,18 +237,18 @@ namespace ic_project_2
 
                 SELECT  ?state ?Pair
                 WHERE {
-                    ?state :Pair ?Pair.
-                    ?Pair :" + ParAname + @" ?intA.
+                    ?state :Triple ?triple.
+                    ?triple :" + ParAname + @" ?intA.
                     ?intA :min ?minA.
                         FILTER(?minA < " + valueA.ToString() + @").
                     ?intA :max ?maxA.
                         FILTER(?maxA > " + valueA.ToString() + @").
-                    ?Pair :" + ParBname + @" ?intB.
+                    ?triple :" + ParBname + @" ?intB.
                     ?intB :min ?minB.
                         FILTER(?minB < " + valueB.ToString() + @").
                     ?intB :max ?maxB.
                         FILTER(?maxB > " + valueB.ToString() + @").
-                    ?Pair :" + ParCname + @" ?intC.
+                    ?triple :" + ParCname + @" ?intC.
                     ?intC :min ?minC.
                         FILTER(?minC < " + valueC.ToString() + @").
                     ?intC :max ?maxC.
@@ -260,8 +258,6 @@ namespace ic_project_2
 
         public string CreateSparqlQueryQuad(int ParA, int valueA, int ParB, int valueB, int ParC, int valueC, int ParD, int valueD)
         {
-            // Pair1_Alarm
-            // Pair1_Int1_Alarm
             string ParAname = "Par" + ParA;
             string ParBname = "Par" + ParB;
             string ParCname = "Par" + ParC;
@@ -274,7 +270,7 @@ namespace ic_project_2
 
                 SELECT  ?state ?Pair
                 WHERE {
-                    ?state :Pair ?Pair.
+                    ?state :Quad ?Pair.
                     ?Pair :" + ParAname + @" ?intA.
                     ?intA :min ?minA.
                         FILTER(?minA < " + valueA.ToString() + @").
@@ -300,8 +296,6 @@ namespace ic_project_2
 
         public string CreateSparqlQueryFifth(int ParA, int valueA, int ParB, int valueB, int ParC, int valueC, int ParD, int valueD, int ParE, int valueE)
         {
-            // Pair1_Alarm
-            // Pair1_Int1_Alarm
             string ParAname = "Par" + ParA;
             string ParBname = "Par" + ParB;
             string ParCname = "Par" + ParC;
@@ -313,30 +307,30 @@ namespace ic_project_2
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
                 PREFIX :        <http://thomas.spb.ru/#>
 
-                SELECT  ?state ?Pair
+                SELECT  ?state ?fifth
                 WHERE {
-                    ?state :Pair ?Pair.
-                    ?Pair :" + ParAname + @" ?intA.
+                    ?state :Fifth ?fifth.
+                    ?fifth :" + ParAname + @" ?intA.
                     ?intA :min ?minA.
                         FILTER(?minA < " + valueA.ToString() + @").
                     ?intA :max ?maxA.
                         FILTER(?maxA > " + valueA.ToString() + @").
-                    ?Pair :" + ParBname + @" ?intB.
+                    ?fifth :" + ParBname + @" ?intB.
                     ?intB :min ?minB.
                         FILTER(?minB < " + valueB.ToString() + @").
                     ?intB :max ?maxB.
                         FILTER(?maxB > " + valueB.ToString() + @").
-                    ?Pair :" + ParCname + @" ?intC.
+                    ?fifth :" + ParCname + @" ?intC.
                     ?intC :min ?minC.
                         FILTER(?minC < " + valueC.ToString() + @").
                     ?intC :max ?maxC.
                         FILTER(?maxC > " + valueC.ToString() + @").
-                    ?Pair :" + ParDname + @" ?intD.
+                    ?fifth :" + ParDname + @" ?intD.
                     ?intD :min ?minD.
                         FILTER(?minD < " + valueD.ToString() + @").
                     ?intD :max ?maxD.
                         FILTER(?maxD > " + valueD.ToString() + @").
-                    ?Pair :" + ParEname + @" ?intE.
+                    ?fifth :" + ParEname + @" ?intE.
                     ?intE :min ?minE.
                         FILTER(?minE < " + valueE.ToString() + @").
                     ?intE :max ?maxE.

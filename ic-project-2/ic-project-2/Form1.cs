@@ -225,15 +225,7 @@ namespace ic_project_2
 
         private void setPairStatusButton(State state)
         {
-            Color newColor;
-            if (state.Status == State.InternalStatus.Alarm)
-            {
-                newColor = Color.Red;
-            }
-            else if (state.Status == State.InternalStatus.Warning)
-                newColor = Color.Yellow;
-            else
-                newColor = Color.LightGreen;
+            Color newColor = state.GetStateColor();
 
             Button button = buttonStatusPair;
             if (button.InvokeRequired)
@@ -252,15 +244,7 @@ namespace ic_project_2
 
         private void setTripleStatusButton(State state)
         {
-            Color newColor;
-            if (state.Status == State.InternalStatus.Alarm)
-            {
-                newColor = Color.Red;
-            }
-            else if (state.Status == State.InternalStatus.Warning)
-                newColor = Color.Yellow;
-            else
-                newColor = Color.LightGreen;
+            Color newColor = state.GetStateColor();
 
             Button button = buttonStatusTriple;
             if (button.InvokeRequired)
@@ -278,15 +262,7 @@ namespace ic_project_2
         }
         private void setQuadStatusButton(State state)
         {
-            Color newColor;
-            if (state.Status == State.InternalStatus.Alarm)
-            {
-                newColor = Color.Red;
-            }
-            else if (state.Status == State.InternalStatus.Warning)
-                newColor = Color.Yellow;
-            else
-                newColor = Color.LightGreen;
+            Color newColor = state.GetStateColor();
 
             Button button = buttonStatusQuad;
             if (button.InvokeRequired)
@@ -304,15 +280,7 @@ namespace ic_project_2
         }
         private void setFifthStatusButton(State state)
         {
-            Color newColor;
-            if (state.Status == State.InternalStatus.Alarm)
-            {
-                newColor = Color.Red;
-            }
-            else if (state.Status == State.InternalStatus.Warning)
-                newColor = Color.Yellow;
-            else
-                newColor = Color.LightGreen;
+            Color newColor = state.GetStateColor();
 
             Button button = buttonStatusFifth;
             if (button.InvokeRequired)
