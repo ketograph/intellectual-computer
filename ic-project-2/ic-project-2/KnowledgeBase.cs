@@ -15,7 +15,7 @@ namespace ic_project_2
         public string Message { get; set; }
     }
 
-    
+
     public class KnowledgeBase
     {
         Notation3Parser parser;
@@ -41,7 +41,7 @@ namespace ic_project_2
 
         public void SaveGraphToFile(string filename)
         {
-            if (string.IsNullOrWhiteSpace(filename) || !filename.EndsWith(".txt")) // Eventuell txt in n3 umbauen
+            if (string.IsNullOrWhiteSpace(filename))
                 throw new ArgumentException("Filename was empty or not ending with .txt");
             var writer = new Notation3Writer();
             writer.Save(graph, filename);
@@ -58,8 +58,6 @@ namespace ic_project_2
 
         public void SetNewAlarmValue(int newAlarmValue)
         {
- 
-
             int triplesCountBefore;
             int triplesCountAfter;
 
@@ -262,7 +260,7 @@ namespace ic_project_2
             string ParBname = "Par" + ParB;
             string ParCname = "Par" + ParC;
             string ParDname = "Par" + ParD;
- 
+
             return @"
                 PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -345,50 +343,19 @@ namespace ic_project_2
             var q = queryParser.ParseFromString(sparqlQuery);
             SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
 
-            if (resultSet != null)
-            {
-                if (resultSet.Count > 1)
-                {
-                    OnNewLogMessage("ERROR: There is more than one result for one parameter! This means there are overlapping Invervalls in the Knowledge Base.");
-                    throw new DataMisalignedException(@"There is more than one result for one parameter! This means there are overlapping Invervalls in the Knowledge Base." +
-                                    "Check the Knowdegle Base." +
-                                    "Parameter" + parameter + " Value: " + value);
-                }
-                else if (resultSet.Count == 1)
-                {
-                    SparqlResult result = resultSet[0];
-                    var resultString = result["state"].ToString();
-                    OnNewLogMessage(result.ToString().Substring(29));
-                    return ParseResultStringToState(resultString);
-                }
-                else if (resultSet.Count == 0)
-                {
-                    return State.Good();
-                }
-            }
-            return State.Undefined();
+            return ParseSparqlResultSetToState(resultSet);
         }
 
-        public State AskPair(SensorSetValues parameters) {
-            State [] stateArrayPair = new State [4];
+        public State AskPair(SensorSetValues parameters)
+        {
+            State[] stateArrayPair = new State[4];
 
             stateArrayPair[0] = AskPairParameter(1, parameters.SensorValue[0], 3, parameters.SensorValue[2]);
             stateArrayPair[1] = AskPairParameter(2, parameters.SensorValue[1], 5, parameters.SensorValue[4]);
             stateArrayPair[2] = AskPairParameter(4, parameters.SensorValue[3], 5, parameters.SensorValue[4]);
             stateArrayPair[3] = AskPairParameter(2, parameters.SensorValue[1], 3, parameters.SensorValue[2]);
 
-            if (stateArrayPair.Any(x => x.Status == State.InternalStatus.Alarm))
-            {
-                return State.Alarm();
-            }
-            else if (stateArrayPair.Any(x => x.Status == State.InternalStatus.Warning))
-            {
-                return State.Warning();
-            }
-            else
-            {
-                return State.Good();
-            }
+            return ParseStateArrayToState(stateArrayPair);
         }
 
         public State AskTriple(SensorSetValues parameters)
@@ -399,17 +366,7 @@ namespace ic_project_2
             stateArrayTriple[1] = AskTripleParameter(1, parameters.SensorValue[0], 3, parameters.SensorValue[2], 5, parameters.SensorValue[4]);
             stateArrayTriple[2] = AskTripleParameter(1, parameters.SensorValue[0], 4, parameters.SensorValue[3], 5, parameters.SensorValue[4]);
 
-            if (stateArrayTriple.Any(x => x.Status == State.InternalStatus.Alarm))
-            {
-                return State.Alarm();
-            }
-            else if (stateArrayTriple.Any(x => x.Status == State.InternalStatus.Warning)) {
-                return State.Warning();
-            }
-            else
-            { 
-                return State.Good();
-            }
+            return ParseStateArrayToState(stateArrayTriple);
         }
 
         public State AskQuad(SensorSetValues parameters)
@@ -417,16 +374,21 @@ namespace ic_project_2
             State[] stateArrayQuad = new State[2];
 
             stateArrayQuad[0] = AskQuadParameter(1, parameters.SensorValue[0], 2, parameters.SensorValue[1], 4, parameters.SensorValue[3], 5, parameters.SensorValue[4]);
-            stateArrayQuad[1] = AskQuadParameter(2, parameters.SensorValue[1], 3, parameters.SensorValue[2], 3, parameters.SensorValue[2],5, parameters.SensorValue[4]);
+            stateArrayQuad[1] = AskQuadParameter(2, parameters.SensorValue[1], 3, parameters.SensorValue[2], 3, parameters.SensorValue[2], 5, parameters.SensorValue[4]);
 
-            if (stateArrayQuad.Any(x => x.Status == State.InternalStatus.Alarm))
+            return ParseStateArrayToState(stateArrayQuad);
+        }
+
+        private State ParseStateArrayToState(State[] stateArray)
+        {
+            if (stateArray.Any(x => x.Status == State.InternalStatus.Alarm))
             {
                 return State.Alarm();
             }
-            else if (stateArrayQuad.Any(x => x.Status == State.InternalStatus.Warning)) 
-                {
+            else if (stateArray.Any(x => x.Status == State.InternalStatus.Warning))
+            {
                 return State.Warning();
-                }
+            }
             else
             {
                 return State.Good();
@@ -435,9 +397,7 @@ namespace ic_project_2
 
         public State AskFifth(SensorSetValues parameters)
         {
-
             return AskFifthParameter(1, parameters.SensorValue[0], 2, parameters.SensorValue[1], 3, parameters.SensorValue[2], 4, parameters.SensorValue[3], 5, parameters.SensorValue[4]);
-           
         }
 
         public State AskPairParameter(int parameterA, int valueA, int parameterB, int valueB)
@@ -446,25 +406,7 @@ namespace ic_project_2
             var q = queryParser.ParseFromString(sparqlQuery);
             SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
 
-            if (resultSet != null)
-            {
-                if (resultSet.Count > 1)
-                {
-                    return State.Alarm();
-                }
-                else if (resultSet.Count == 1)
-                {
-                    SparqlResult result = resultSet[0];
-                    var resultString = result["state"].ToString();
-                    OnNewLogMessage(result.ToString().Substring(29));
-                    return ParseResultStringToState(resultString);
-                }
-                else if (resultSet.Count == 0)
-                {
-                    return State.Good();
-                }
-            }
-            return State.Undefined();
+            return ParseSparqlResultSetToState(resultSet);
         }
 
         public State AskTripleParameter(int parameterA, int valueA, int parameterB, int valueB, int parameterC, int valueC)
@@ -473,25 +415,7 @@ namespace ic_project_2
             var q = queryParser.ParseFromString(sparqlQuery);
             SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
 
-            if (resultSet != null)
-            {
-                if (resultSet.Count > 1)
-                {
-                    return State.Alarm();
-                }
-                else if (resultSet.Count == 1)
-                {
-                    SparqlResult result = resultSet[0];
-                    var resultString = result["state"].ToString();
-                    OnNewLogMessage(result.ToString().Substring(29));
-                    return ParseResultStringToState(resultString);
-                }
-                else if (resultSet.Count == 0)
-                {
-                    return State.Good();
-                }
-            }
-            return State.Undefined();
+            return ParseSparqlResultSetToState(resultSet);
         }
 
         public State AskQuadParameter(int parameterA, int valueA, int parameterB, int valueB, int parameterC, int valueC, int parameterD, int valueD)
@@ -500,25 +424,7 @@ namespace ic_project_2
             var q = queryParser.ParseFromString(sparqlQuery);
             SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
 
-            if (resultSet != null)
-            {
-                if (resultSet.Count > 1)
-                {
-                    return State.Alarm();
-                }
-                else if (resultSet.Count == 1)
-                {
-                    SparqlResult result = resultSet[0];
-                    var resultString = result["state"].ToString();
-                    OnNewLogMessage(result.ToString().Substring(29));
-                    return ParseResultStringToState(resultString);
-                }
-                else if (resultSet.Count == 0)
-                {
-                    return State.Good();
-                }
-            }
-            return State.Undefined();
+            return ParseSparqlResultSetToState(resultSet);
         }
 
         public State AskFifthParameter(int parameterA, int valueA, int parameterB, int valueB, int parameterC, int valueC, int parameterD, int valueD, int parameterE, int valueE)
@@ -527,6 +433,11 @@ namespace ic_project_2
             var q = queryParser.ParseFromString(sparqlQuery);
             SparqlResultSet resultSet = graph.ExecuteQuery(q) as SparqlResultSet;
 
+            return ParseSparqlResultSetToState(resultSet);
+        }
+
+        public State ParseSparqlResultSetToState(SparqlResultSet resultSet)
+        {
             if (resultSet != null)
             {
                 if (resultSet.Count > 1)
@@ -547,6 +458,7 @@ namespace ic_project_2
             }
             return State.Undefined();
         }
+
 
         private State ParseResultStringToState(string resultString)
         {
