@@ -100,28 +100,28 @@ namespace ic_project_2
 
         private Triple GetMinWarningTriple()
         {
-            var uriIntervallWarning = new Uri("http://thomas.spb.ru/#Int1_Warning");
+            var uriIntervallWarning = new Uri("http://computing.spb.ru/#Int1_Warning");
             var nodeWarning = graph.GetUriNode(uriIntervallWarning);
             var minWarningTriple = graph.GetTriplesWithSubject(nodeWarning).Where(x => x.Predicate.ToString().Contains("min")).First();
             return minWarningTriple;
         }
         private Triple GetMaxWarningTriple()
         {
-            var uriIntervallWarning = new Uri("http://thomas.spb.ru/#Int1_Warning");
+            var uriIntervallWarning = new Uri("http://computing.spb.ru/#Int1_Warning");
             var nodeWarning = graph.GetUriNode(uriIntervallWarning);
             var maxWarningTriple = graph.GetTriplesWithSubject(nodeWarning).Where(x => x.Predicate.ToString().Contains("max")).First();
             return maxWarningTriple;
         }
         private Triple GetMinAlarmTriple()
         {
-            var uriIntervalAlarm = new Uri("http://thomas.spb.ru/#Int1_Alarm");
+            var uriIntervalAlarm = new Uri("http://computing.spb.ru/#Int1_Alarm");
             var nodeAlarm = graph.GetUriNode(uriIntervalAlarm);
             var minAlarmTriple = graph.GetTriplesWithSubject(nodeAlarm).Where(x => x.Predicate.ToString().Contains("min")).First();
             return minAlarmTriple;
         }
         private Triple GetMaxAlarmTriple()
         {
-            var uriIntervalAlarm = new Uri("http://thomas.spb.ru/#Int1_Alarm");
+            var uriIntervalAlarm = new Uri("http://computing.spb.ru/#Int1_Alarm");
             var nodeAlarm = graph.GetUriNode(uriIntervalAlarm);
             var maxAlarmTriple = graph.GetTriplesWithSubject(nodeAlarm).Where(x => x.Predicate.ToString().Contains("max")).First();
             return maxAlarmTriple;
@@ -181,7 +181,7 @@ namespace ic_project_2
             return @"
                 PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX : <http://thomas.spb.ru/#>
+                PREFIX : <http://computing.spb.ru/#>
 
                 SELECT ?state
                 WHERE {
@@ -204,7 +204,7 @@ namespace ic_project_2
             return @"
                 PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX :        <http://thomas.spb.ru/#>
+                PREFIX :        <http://computing.spb.ru/#>
 
                 SELECT  ?state ?Pair
                 WHERE {
@@ -231,7 +231,7 @@ namespace ic_project_2
             return @"
                 PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX :        <http://thomas.spb.ru/#>
+                PREFIX :        <http://computing.spb.ru/#>
 
                 SELECT  ?state ?Pair
                 WHERE {
@@ -264,7 +264,7 @@ namespace ic_project_2
             return @"
                 PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX :        <http://thomas.spb.ru/#>
+                PREFIX :        <http://computing.spb.ru/#>
 
                 SELECT  ?state ?Pair
                 WHERE {
@@ -303,7 +303,7 @@ namespace ic_project_2
             return @"
                 PREFIX owl:     <http://www.w3.org/2002/07/owl#> 
                 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-                PREFIX :        <http://thomas.spb.ru/#>
+                PREFIX :        <http://computing.spb.ru/#>
 
                 SELECT  ?state ?fifth
                 WHERE {

@@ -1,5 +1,5 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix : <http://thomas.spb.ru/#>. 
+@prefix : <http://computing.spb.ru/#>. 
 
 :State rdf:type rdf:Class.
 :Alarm rdf:type :State.
