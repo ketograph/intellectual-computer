@@ -1,0 +1,21 @@
+Control System
+- Parameters
+- Scenarios
+ * normal
+  + graph (all of them with state := valve1 open)
+   - swim lanes graph, graph for description of sequetial 
+   - Gantt chart (connection to time)
+   - sequence diagramm (connection to dependencies/exchange of parameters [and therefore also to time])
+  + parameters
+   - for t=0: (p1==A) && (p2==B) && (...) && (t < 5s)
+   - (..) && (...) && ( t > ...)
+ * SC1 (is caused by Problem 1)
+  + reason
+   - graph 
+   - parameters: if() Alarm; if () warning
+  + consequences
+   - immediate alarm
+   - some parameters change badly
+ * SC2 (is caused by Problem 2)
+ * SC3 (is caused by Problem 3 but at a diffrent time)
+ * SC_n

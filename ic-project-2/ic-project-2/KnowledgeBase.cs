@@ -190,7 +190,6 @@ namespace ic_project_2
                         FILTER(?min < " + value.ToString() + @").
                     ?int :max ?max.
                         FILTER(?max > " + value.ToString() + @").
-
                 }";
         }
 
@@ -389,9 +388,13 @@ namespace ic_project_2
             {
                 return State.Warning();
             }
-            else
+            else if (stateArray.All( x=> x.Status == State.InternalStatus.Good))
             {
                 return State.Good();
+            }
+            else
+            {
+                return State.Warning();
             }
         }
 
