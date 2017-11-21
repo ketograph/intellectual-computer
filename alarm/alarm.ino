@@ -1,3 +1,5 @@
+#include "everytime.h"
+
 // Definition of the input pins
 int PinA1 = 15;
 int PinA2 = 16;
@@ -25,26 +27,34 @@ long STATUS_CODE_ALARM = 3; //Alarm
 
 long parsedStatusCode = 0;
 
+bool BuiltinLedState = false;
+
 void setup() {
   Serial.begin(9600);
   pinMode(PinD13, INPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
   pinMode(WARNING_LAMP, OUTPUT);
   pinMode(ALARM_LAMP, OUTPUT); 
 
-  // Blink at startup
-  digitalWrite(WARNING_LAMP, HIGH);
-  digitalWrite(ALARM_LAMP, HIGH);
-  delay(500);
-  digitalWrite(WARNING_LAMP, LOW);
-  digitalWrite(ALARM_LAMP, LOW);
-  delay(500);
-  digitalWrite(WARNING_LAMP, HIGH);
-  digitalWrite(ALARM_LAMP, HIGH);
-  delay(500);
-  digitalWrite(WARNING_LAMP, LOW);
-  digitalWrite(ALARM_LAMP, LOW);
+  BlinkAtStartup();
 }
-
+void BlinkAtStartup(){
+  digitalWrite(WARNING_LAMP, HIGH);
+  digitalWrite(ALARM_LAMP, HIGH);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(500);
+  digitalWrite(WARNING_LAMP, LOW);
+  digitalWrite(ALARM_LAMP, LOW);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(500);
+  digitalWrite(WARNING_LAMP, HIGH);
+  digitalWrite(ALARM_LAMP, HIGH);
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(500);
+  digitalWrite(WARNING_LAMP, LOW);
+  digitalWrite(ALARM_LAMP, LOW);
+  digitalWrite(LED_BUILTIN, LOW);
+}
 void ReadAnalogPins(){
   ValueA1 = analogRead(PinA1);
   ValueA2 = analogRead(PinA2);
@@ -52,10 +62,12 @@ void ReadAnalogPins(){
   ValueA4 = analogRead(PinA4);
   ValueA5 = analogRead(PinA5);
 }
+void ReadDigitalPins(){
+  ValueD13 = digitalRead(PinD13);
+}
 
 void SendValuesSerialPort(){
   Serial.flush(); // Waits for the transmission of outgoing serial data to complete
-  //Serial.print("VALUES;");
   Serial.print(ValueA1);
   Serial.print(";");
   Serial.print(ValueA2);
@@ -66,15 +78,11 @@ void SendValuesSerialPort(){
   Serial.print(";");
   Serial.print(ValueA5);
   Serial.print(";");
+  // Set Parameter 1 to new Value?
+  Serial.print(ValueD13);
+  // Set all other Parameters? No!
+  Serial.print(";0;0;0;0;");
   Serial.print("\n");
-}
-
-void SendSetValue(){
-  Serial.flush();
-  Serial.print("SET;");
-  Serial.print("1;"); // number of the parameter
-  Serial.print(ValueA1);
-  Serial.println(";");
 }
 
 void ReadSerialPort(){
@@ -84,7 +92,7 @@ void ReadSerialPort(){
   }
 }
 
-void ToggleBuiltinLed(){
+void SetStatusLeds(){
   if(parsedStatusCode == STATUS_CODE_ALARM){ //Chance lamp if warning or alarm
     digitalWrite(WARNING_LAMP, HIGH);
     digitalWrite(ALARM_LAMP, LOW);
@@ -99,10 +107,35 @@ void ToggleBuiltinLed(){
   }
 }
 
+void BuiltinLedOn(){
+  digitalWrite(LED_BUILTIN, HIGH);
+  BuiltinLedState = true;
+}
+
+void ToggleBuiltinLed(){
+  digitalWrite(LED_BUILTIN, !BuiltinLedState);
+  BuiltinLedState = !BuiltinLedState;
+}
+
 void loop() {
-  ReadAnalogPins();
-  SendValuesSerialPort(); 
-  ReadSerialPort();
-  ToggleBuiltinLed();
-  delay(1000);
+  ValueD13 = false;
+  if(parsedStatusCode == STATUS_CODE_GOOD){
+    BuiltinLedOn();
+  }
+  else if (parsedStatusCode == STATUS_CODE_WARNING){
+    every(300){ToggleBuiltinLed();}
+  }
+  else if (parsedStatusCode == STATUS_CODE_ALARM){
+    every(100){ToggleBuiltinLed();}
+  }
+ every(2000){
+  //ValueD13 = true;
+ }
+  every(1000){
+    ReadAnalogPins();
+    ReadDigitalPins();
+    SendValuesSerialPort(); 
+    ReadSerialPort();
+    SetStatusLeds();
+  }
 }

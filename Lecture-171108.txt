@@ -1,0 +1,34 @@
+(Control Systems)
+    |
+(Paraters)
+   |             \
+  schemas      instruments
+  |
+()
+
+
+differental equation (1st/2nd order)
+transfer function (F(w)=1/(w+1)
+
+scenario control
+* we want to keep some parameters in a range and regulate
+* this is issued to some specific equipment
+* we have a set of parameters P1...P5
+* normal scenario control SC0
+  + we can create some graphs for that
+    - standard graph y=f(x)
+    - special graphs: continual graph
+                      sequence graph
+  + rules describtion (this works normal if this rule is obeyed)
+    if par1 == x then par2==y --> but this does not consider time, so we have to find contorl find moments
+      valve           pump
+    define at which time we control some parameter (for t1 if... then...)
+* Scenario 1 SC1
+  + name (should tell me the most important details about scenario e.g. pump is broken
+  + reason (pump broken)
+  + consequences
+
+1) describe normal scenario (SC0) and understand it
+2) create different scenarios SC.. (name, reason, consequences), how many we would like
+3) how to describe reason and consequences: 
+   reason: some normal rules are broken

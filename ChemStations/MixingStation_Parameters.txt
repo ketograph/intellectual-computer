@@ -1,0 +1,30 @@
+normal scenario:
+valve open := 1
+valve closed := 0
+turned on := 1
+turned off := 0
+sensor detects water := 1
+sonsor detects no water := 0
+
+
+V208==1 &&  2M3==1 && V206==0 && V205==0 && V204==0 &&
+	2M4==0 && 2M5==0 && 2M1==1&& V210==0 && V211==0 && 
+	2M2==1 && V207==0 && V209==1
+
+
+
+problem scenarios:
+B201_overflowing 
+	2B10==1 => V210==0, V206==0
+B202_overflowing
+	2B11==1 => V205==0
+B203_overflowing
+	2B12==1 => V204==0
+B204_overflowing
+	2B14==1
+2M1_pumps_without_liquid := 2M1 && !2M3 && !2M4 && !2M5 && !V210 => !2M1
+2M1_pumps_without_liquid_0 := 2M1 && 2M3 && !2B3 => !2M1
+2M1_pumps_without_liquid_1 := 2M1 && 2M3 && !2B4 => !2M1
+2M1_pumps_without_liquid_2 := 2M1 && 2M3 && !2B5 => !2M1
+2M2_pumps_without_liquid := 2M2 && !2B7 && !V210 => !2M2
+2M2_pumps_against_closed_valves := 2M2 && !V207 && !V209 => !2M2

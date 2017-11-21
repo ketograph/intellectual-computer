@@ -1,0 +1,24 @@
+Knowledge Base with Sparcle/Sparqle abfragen
+-> new State an Arduino senden
+Gelbe/Rote LED
+
+zuerst: nur für jeden einzelnen Parameter machen
+zwei Varianten: SELECT oder ASK (true/false)
+
+// for .n3 file
+@Prefix :<our.web>.
+
+// for query
+PREFIX :<our.web>
+... Query
+
+dbpedia.org/sparql
+proxy password:
+user315:user315
+
+triple pattern
+
+SELECT ?x
+WHERE
+{ :int1 :par1 ?x
+}

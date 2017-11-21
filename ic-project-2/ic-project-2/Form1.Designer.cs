@@ -29,7 +29,6 @@ namespace ic_project_2
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.textBoxPar1 = new System.Windows.Forms.TextBox();
             this.textBoxPar2 = new System.Windows.Forms.TextBox();
             this.textBoxPar3 = new System.Windows.Forms.TextBox();
@@ -45,13 +44,16 @@ namespace ic_project_2
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.StatusLabelBar = new System.Windows.Forms.ToolStripStatusLabel();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.form1BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.measuredParametersBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.measuredParametersBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.SetButton1 = new System.Windows.Forms.Button();
+            this.SetButton2 = new System.Windows.Forms.Button();
+            this.SetButton3 = new System.Windows.Forms.Button();
+            this.SetButton4 = new System.Windows.Forms.Button();
+            this.SetButton5 = new System.Windows.Forms.Button();
+            this.buttonStatusPair = new System.Windows.Forms.Button();
+            this.buttonStatusTriple = new System.Windows.Forms.Button();
+            this.buttonStatusQuad = new System.Windows.Forms.Button();
+            this.buttonStatusFifth = new System.Windows.Forms.Button();
             this.statusStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.measuredParametersBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.measuredParametersBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxPar1
@@ -140,7 +142,7 @@ namespace ic_project_2
             this.comboBoxComPort.Location = new System.Drawing.Point(92, 13);
             this.comboBoxComPort.Name = "comboBoxComPort";
             this.comboBoxComPort.Size = new System.Drawing.Size(100, 21);
-            this.comboBoxComPort.TabIndex = 11;
+            this.comboBoxComPort.TabIndex = 0;
             this.comboBoxComPort.DropDown += new System.EventHandler(this.comboBoxComPort_DropDown);
             this.comboBoxComPort.SelectionChangeCommitted += new System.EventHandler(this.comboBoxComPort_SelectionChangeCommitted);
             // 
@@ -159,7 +161,7 @@ namespace ic_project_2
             this.StatusLabelBar});
             this.statusStrip1.Location = new System.Drawing.Point(0, 527);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(754, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1106, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -174,26 +176,108 @@ namespace ic_project_2
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Location = new System.Drawing.Point(244, 13);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(498, 485);
+            this.listBox1.Size = new System.Drawing.Size(844, 485);
             this.listBox1.TabIndex = 15;
             // 
-            // form1BindingSource
+            // SetButton1
             // 
-            this.form1BindingSource.DataSource = typeof(ic_project_2.Form1);
+            this.SetButton1.Location = new System.Drawing.Point(199, 44);
+            this.SetButton1.Name = "SetButton1";
+            this.SetButton1.Size = new System.Drawing.Size(39, 23);
+            this.SetButton1.TabIndex = 16;
+            this.SetButton1.Text = "Set";
+            this.SetButton1.UseVisualStyleBackColor = true;
             // 
-            // measuredParametersBindingSource
+            // SetButton2
             // 
-            this.measuredParametersBindingSource.DataSource = typeof(ic_project_2.SensorValues);
+            this.SetButton2.Location = new System.Drawing.Point(199, 70);
+            this.SetButton2.Name = "SetButton2";
+            this.SetButton2.Size = new System.Drawing.Size(39, 23);
+            this.SetButton2.TabIndex = 17;
+            this.SetButton2.Text = "Set";
+            this.SetButton2.UseVisualStyleBackColor = true;
             // 
-            // measuredParametersBindingSource1
+            // SetButton3
             // 
-            this.measuredParametersBindingSource1.DataSource = typeof(ic_project_2.SensorValues);
+            this.SetButton3.Location = new System.Drawing.Point(199, 96);
+            this.SetButton3.Name = "SetButton3";
+            this.SetButton3.Size = new System.Drawing.Size(39, 23);
+            this.SetButton3.TabIndex = 18;
+            this.SetButton3.Text = "Set";
+            this.SetButton3.UseVisualStyleBackColor = true;
+            // 
+            // SetButton4
+            // 
+            this.SetButton4.Location = new System.Drawing.Point(199, 122);
+            this.SetButton4.Name = "SetButton4";
+            this.SetButton4.Size = new System.Drawing.Size(39, 23);
+            this.SetButton4.TabIndex = 19;
+            this.SetButton4.Text = "Set";
+            this.SetButton4.UseVisualStyleBackColor = true;
+            // 
+            // SetButton5
+            // 
+            this.SetButton5.Location = new System.Drawing.Point(199, 148);
+            this.SetButton5.Name = "SetButton5";
+            this.SetButton5.Size = new System.Drawing.Size(39, 23);
+            this.SetButton5.TabIndex = 20;
+            this.SetButton5.Text = "Set";
+            this.SetButton5.UseVisualStyleBackColor = true;
+            // 
+            // buttonStatusPair
+            // 
+            this.buttonStatusPair.Location = new System.Drawing.Point(15, 209);
+            this.buttonStatusPair.Name = "buttonStatusPair";
+            this.buttonStatusPair.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonStatusPair.Size = new System.Drawing.Size(61, 32);
+            this.buttonStatusPair.TabIndex = 21;
+            this.buttonStatusPair.Text = "Pair";
+            this.buttonStatusPair.UseVisualStyleBackColor = true;
+            // 
+            // buttonStatusTriple
+            // 
+            this.buttonStatusTriple.Location = new System.Drawing.Point(12, 247);
+            this.buttonStatusTriple.Name = "buttonStatusTriple";
+            this.buttonStatusTriple.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonStatusTriple.Size = new System.Drawing.Size(61, 32);
+            this.buttonStatusTriple.TabIndex = 22;
+            this.buttonStatusTriple.Text = "Triple";
+            this.buttonStatusTriple.UseVisualStyleBackColor = true;
+            // 
+            // buttonStatusQuad
+            // 
+            this.buttonStatusQuad.Location = new System.Drawing.Point(12, 285);
+            this.buttonStatusQuad.Name = "buttonStatusQuad";
+            this.buttonStatusQuad.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonStatusQuad.Size = new System.Drawing.Size(61, 32);
+            this.buttonStatusQuad.TabIndex = 23;
+            this.buttonStatusQuad.Text = "Quad";
+            this.buttonStatusQuad.UseVisualStyleBackColor = true;
+            // 
+            // buttonStatusFifth
+            // 
+            this.buttonStatusFifth.Location = new System.Drawing.Point(12, 323);
+            this.buttonStatusFifth.Name = "buttonStatusFifth";
+            this.buttonStatusFifth.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.buttonStatusFifth.Size = new System.Drawing.Size(61, 32);
+            this.buttonStatusFifth.TabIndex = 24;
+            this.buttonStatusFifth.Text = "Fifth";
+            this.buttonStatusFifth.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(754, 549);
+            this.ClientSize = new System.Drawing.Size(1106, 549);
+            this.Controls.Add(this.buttonStatusFifth);
+            this.Controls.Add(this.buttonStatusQuad);
+            this.Controls.Add(this.buttonStatusTriple);
+            this.Controls.Add(this.buttonStatusPair);
+            this.Controls.Add(this.SetButton5);
+            this.Controls.Add(this.SetButton4);
+            this.Controls.Add(this.SetButton3);
+            this.Controls.Add(this.SetButton2);
+            this.Controls.Add(this.SetButton1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.label1);
@@ -213,9 +297,6 @@ namespace ic_project_2
             this.Load += new System.EventHandler(this.OnFormLoad);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.form1BindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.measuredParametersBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.measuredParametersBindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,9 +319,15 @@ namespace ic_project_2
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel StatusLabelBar;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.BindingSource measuredParametersBindingSource;
-        private System.Windows.Forms.BindingSource form1BindingSource;
-        private System.Windows.Forms.BindingSource measuredParametersBindingSource1;
+        private System.Windows.Forms.Button SetButton1;
+        private System.Windows.Forms.Button SetButton2;
+        private System.Windows.Forms.Button SetButton3;
+        private System.Windows.Forms.Button SetButton4;
+        private System.Windows.Forms.Button SetButton5;
+        private System.Windows.Forms.Button buttonStatusPair;
+        private System.Windows.Forms.Button buttonStatusTriple;
+        private System.Windows.Forms.Button buttonStatusQuad;
+        private System.Windows.Forms.Button buttonStatusFifth;
     }
 }
 

@@ -1,0 +1,42 @@
+title Filtration station
+
+group Normal procedure
+V101-#green>B101:**Fill tank**
+note over 1M2 #lightgreen:Pump on
+B101-#green>V101: **Check sensor value** 
+note over B101 #lightgreen:1B3 on
+note over B101 #lightgreen:1B2 off
+note over B101 #lightgreen:1M7 on
+B101-#green>1M2: **Forward water through pump**
+
+note over B101, 1M2 #lightgreen: Valve V110 closed
+
+
+1M2-#green>F101: **Forward water to filter**
+F101-#green>1M5: **Filter to pump**
+note over F101, B102 #lightgreen: 1M1 closed
+note over 1M5 #lightgreen: 1M5 on
+1M5-#green>B102: **Pump to tank**
+note over F101, B102 #lightgreen: 1M6 off
+note over F101, B102 #lightgreen: 1M3 off
+note over F101, B102 #lightgreen: V111 closed
+
+B102-#green>V108: **Tank to valve**
+
+end
+group Water overflow warning in tank B101
+note over B101 #orangered: Sensor 1B2 on
+B101-#red>V110: Drain water
+note over 1M2: Pump 1M2 off
+
+note over V101:Valve V101 closed
+end
+group Water overflow warning in tank B102
+note over B102: Sensor 1B4 on
+B102-#red>1M3: Drain water from tank
+note over V108:Valve V108 closed
+note over B102: Pump 1M5 off
+note over 1M3: Pump 1M3 on
+note over V111:Valve opened
+1M3-#red>V111: Drain water
+end

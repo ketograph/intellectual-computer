@@ -1,0 +1,26 @@
+title Mixing Station
+
+V208->B201:fill tank
+note over B201:fluid sensors\n2B3, 2B2
+B201->V208:act on sensor
+B201->2M3: drain tank
+2M3->2M1:to pump
+2M1->B204:fill tank
+note over B204:fluid sensors\n2B7
+B204->2M1:act on sensor
+B204->2M2:empty tank
+2M2->V209:fill other module
+2M2->V207:fill other tanks
+V207->V206:fill B201
+V207->V205:fill B202
+V207->V204:fill B203
+V206->B201:fill tank
+V205->B202:fill tank
+note over B202:fluid sensors\n2B4
+B202->V205:act on sensor
+V204->B203:fill tank
+note over B203:fluid sensors\n2B5
+B203->V204:act on sensor
+B202->2M4:drain tank
+B203->2M5:drain tank
+B204->V211:drainage\nof the\nmodule

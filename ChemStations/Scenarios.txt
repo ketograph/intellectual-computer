@@ -1,0 +1,106 @@
+* SC0 (everything ok)
+
+#############
+## Module 1
+## Filtering
+#############
+
+- V101 open (manuell)
+- 1M7 is on
+- 1B11 is off (Überlaufsensor)
+- 1B2 is off (Sensor hoher Füllstand)
+- 1B3 is on (Sensor leer)
+- 1M2 working
+- V110 closed (manuell, Entleerungsventil)
+- V104 egal, Rückschlagventil
+- 1M4 is open/on (steuert Zufluss zum Filter/V102 oder Rückfluss zum Tank B101)
+- 1M1 steuert Druckluft
+- 1B1 is showing the air pressure
+- V112 (eventuell Rückschlagventil? kann nicht gesteuert/abgefragt werden)
+- 1M5 wieviel Prozent offen (steuert Zufluss in Klarwassertank B102)
+- V105 (manuell Rückschlagventil)
+- V111 closed (manuell)
+- 1M3 on
+- 1B4 (oberer Füllsensor Tank)
+- 1B5 (unterer Füllsensor Tank)
+- 1B11 (Überlaufsensor)
+- V108 (manuell) nicht mehr vorhanden?)
+- 1M6 wieviel Prozent geht an Modul 2 (steuert V106)
+
+
+#############
+## Module 2
+## Mixing
+#############
+ 
+- V208 offen (manuell) 
+Tank B201
+- 2B2 (oberer
+- 2B3 (unterer
+- 2B10 (Überlauf
+- V206 offen (manuell)
+- 2M3 offen (steuert Abfluss)
+Tank B202
+- 2B4 (unterer
+- 2B11 (Überlauf
+- V205 closed(manuell)
+- 2M4 offen (steuert Abfluss)
+Tank B203
+- 2B5 (unterer
+- 2B12 (Überlauf
+- V204 closed(manuell)
+- 2M5 offen (steuert Abfluss)
+
+- 2M1 an (steuert Zufluss Tank B204)
+- 2B1 Zuflusssensor
+- 2B6 (oberer
+- 2B7 (unterer
+- 2B13 (Überlauf
+
+- V207 offen (manuell) (Rückfluss zu Modul 1)
+- V210 offen (manuell)
+- V211 geschloßen (manuell)
+- 2M2 off (pumps to B201/2/3 or to Tank Modul 1)
+- V209 open (to Module 3)
+
+#############
+## Module 3
+## Reactor
+#############
+ 
+- V301 open (manuell)
+- 3M4 on (Mixer/Rührer)
+- 3M2 on 
+- 3B2 (oberer
+- 3B3 (unterer
+- V311 nicht vorhanden (manuell)
+- V310 closed (manuell)
+- 3B1 Temperatursensor
+- W303  on (steuert Temperatur)
+- 3M3 on (pumpt in Modul 4)
+- V302 (manuell) (Zufluss Modul 4)
+
+#############
+## Module 4
+## Bottling
+#############
+- V404 open (manuell, Zufluss von Modul 3)
+- 4B2 (oberer
+- 4B3 (unterer
+- 4B11 (Überlauf
+- V405 closed (Abfluss zu Modul 1)
+- 4M1 on 
+- V402 zu (manuell, Sicherheitsventil)
+- V401 (Rückschlagventil)
+- 4B1 Füllstandsensor
+- 4B10 Überlauf
+- 4M2 closed (Abfüllventil)
+- 4B4 |   (es ist Platz auf den Band zum Nachfüllen von Gefäßen)
+- 4B5 |> Glassensoren
+- 4B6 |   (ein Gefäß ist fertig geworden)
+- 4M4 hält Gefäß unter Einflussventil oder lässt es weiter machen
+- 4M32 steuert Band unter Einfüllung
+- 4M31 steuert Band mit vollgefüllten Gefäßen
+- 
+
+
